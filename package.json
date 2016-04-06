@@ -1,0 +1,21 @@
+{
+  "name": "roadtrippin",
+  "version": "1.0.0",
+  "description": "Find the best routes and attractions",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZeusCrew/ZeusCrew.git"
+  },
+  "author": "Zeus Crew",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ZeusCrew/ZeusCrew/issues"
+  },
+  "homepage": "https://github.com/ZeusCrew/ZeusCrew#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "grunt": "^1.0.1"
+  }
+}
