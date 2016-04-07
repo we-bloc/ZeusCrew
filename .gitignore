@@ -1,7 +1,8 @@
 node_modules
 client/lib
 *.DS_Store
-*.env
+
+.env
 
 *.floo
 *.flooignore

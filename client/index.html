@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Document</title>
+	<title>Thunder Routes</title>
   <script src="lib/angular/angular.js"></script>
   <script src="app/app.js"></script>
   <script src="app/mapCtrl.js"></script>
   <script src="app/mapFactory.js"></script>
 </head>
 <body ng-app="roadtrippin" ng-controller="mapController">
-  <h1>Roadtrippin'</h1>
-	<input id="start" type="text" placeholder="Enter start point"/>
-	<input id="end" placeholder="Enter end point" />
+  <h1>Thunder Routes</h1>
+	<input id="start" type="text" placeholder="Enter start point" ng-model="route.start"/>
+	<input id="end" type="text" placeholder="Enter end point" ng-model="route.end" />
   <select>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
     <option value="4">4</option>
-    <option value="4">5</option>
+    <option value="5">5</option>
   </select>
   <button>Get Stops</button>
   <div id="map"></div>
