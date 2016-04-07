@@ -1,11 +1,13 @@
 var express = require('express');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
+var parser = require('body-parser');
 
 var app = express();
 //mongoose.connect('mongodb://localhost/roadtrippin');
 
 app.use(express.static(__dirname + '/../client'));
+app.use(parser.json());
 app.use(morgan('dev'));
 
 var port = process.env.PORT || 8080;
