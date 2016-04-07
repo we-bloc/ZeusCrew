@@ -1,0 +1,17 @@
+{
+  "name": "roadtrippin",
+  "description": "Find the best routes and attractions",
+  "main": "index.js",
+  "authors": [
+    "Zeus Crew"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/ZeusCrew/ZeusCrew.git",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
