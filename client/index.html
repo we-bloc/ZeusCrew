@@ -3,12 +3,16 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+  <script src="lib/angular/angular.js"></script>
+  <script src="app/app.js"></script>
+  <script src="app/mapCtrl.js"></script>
+  <script src="app/mapFactory.js"></script>
 </head>
-<body>
+<body ng-app="roadtrippin" ng-controller="mapController">
   <h1>Roadtrippin'</h1>
-	<input id="start" placeholder="Enter start point" />
+	<input id="start" type="text" placeholder="Enter start point"/>
 	<input id="end" placeholder="Enter end point" />
-	<select>
+  <select>
     <option value="1">1</option>
     <option value="2">2</option>
     <option value="3">3</option>
