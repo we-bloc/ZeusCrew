@@ -1,5 +1,5 @@
 angular.module('gservice', [])
-    .factory('gservice', function($http){
+    .factory('gservice', function($http) {
 
       var googleMapService = {};
 
@@ -10,7 +10,7 @@ angular.module('gservice', [])
       var map, directionsDisplay;
       var directionsService = new google.maps.DirectionsService();
 
-      var initialize = function(){
+      var initialize = function () {
         directionsDisplay = new google.maps.DirectionsRenderer();
         var SF = new google.maps.LatLng(37.7749, -122.4194);
         var mapOptions = {
@@ -23,7 +23,7 @@ angular.module('gservice', [])
 
       // Refresh, to re-initialize the map.
       // New data could be passed to initialize here
-      googleMapService.refresh = function(){
+      googleMapService.refresh = function () {
         initialize();
       };
 
@@ -32,14 +32,14 @@ angular.module('gservice', [])
         googleMapService.refresh());
 
       //calculate a route
-      googleMapService.calcRoute = function(start, end){
+      googleMapService.calcRoute = function (start, end) {
         var request = {
           origin: start,
           destination: end,
           travelMode: google.maps.TravelMode.DRIVING
         };
-        directionsService.route(request, function(result, status){
-          if (status == google.maps.DirectionsStatus.OK){
+        directionsService.route (request, function(result, status) {
+          if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(result);
           }
         });
