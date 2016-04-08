@@ -6,7 +6,7 @@ var parser = require('body-parser');
 var app = express();
 
 app.use(express.static(__dirname + '/../client'));
-var parser = require('body-parser');
+app.use(parser.json());
 app.use(morgan('dev'));
 
 
