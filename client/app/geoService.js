@@ -29,7 +29,7 @@ angular.module('gservice', [])
           points.push(stopDistance + (stopDistance * i));
         }
 
-        //initialize an empty array to hold our waypoints  
+        //initialize an empty array to hold our waypoints
         var waypoints = [];
         points.forEach(function (index) {
           //each waypoint will be an object with a lat and lng
