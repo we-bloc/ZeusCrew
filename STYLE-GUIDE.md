@@ -209,7 +209,7 @@ When writing any block of code that is logically subordinate to the line immedia
     alert( "I only put visual padding on one side of this string");
     ```
 
-* For statements that include a block--i.e. `if`, `for`, `while`, etc, use additional whitespace as padding.
+* For all statements that include a block--i.e. `if`, `for`, `while`, etc, use additional whitespace as padding.
     
     ```javascript
     // good:
