@@ -39,7 +39,7 @@ angular.module('gservice', [])
           };
           waypoints.push(waypoint);
         });
-        console.log(waypoints);
+        return waypoints;
       };
 
       // Refresh, to re-initialize the map.
@@ -61,8 +61,27 @@ angular.module('gservice', [])
         };
         directionsService.route (request, function(result, status) {
           if (status == google.maps.DirectionsStatus.OK) {
-            getWaypoints(result.routes[0].overview_path, numStops);
-            directionsDisplay.setDirections(result);
+            var stops = [];
+            var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
+            waypoints.forEach(function (w) {
+              stops.push({
+                location: new google.maps.LatLng(w.lat, w.lng),
+                stopover: true
+              });
+            });
+            var wyptRequest = {
+              origin: start,
+              destination: end,
+              waypoints: stops,
+              optimizeWaypoints: true,
+              travelMode: google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(wyptRequest, function(response, status) {
+              if (status === google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+                var route = response.routes[0];
+              }
+            });
           }
         });
       };
