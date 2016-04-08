@@ -88,13 +88,13 @@ When writing any block of code that is logically subordinate to the line immedia
   ```javascript
   // good:
   var list = ['a', 'b', 'c']
-  for(var i = 0; i < list.length; i++){
+  for (var i = 0; i < list.length; i++){
     alert(list[i]);
   }
 
   // bad:
   var list = ['a', 'b', 'c']
-  for(var i in list){
+  for (var i in list){
     alert(list[i]);
   }
   ```
@@ -102,12 +102,12 @@ When writing any block of code that is logically subordinate to the line immedia
 * Never omit braces for statement blocks (although they are technically optional).
     ```javascript
     // good:
-    for(key in object){
+    for (key in object){
       alert(key);
     }
 
     // bad:
-    for(key in object)
+    for (key in object)
       alert(key);
     ```
 
@@ -157,12 +157,12 @@ When writing any block of code that is logically subordinate to the line immedia
 
   ```javascript
   // good:
-  if(condition){
+  if (condition){
     response();
   }
 
   // bad:
-  if(condition){
+  if (condition){
     response();
   };
   ```
@@ -207,6 +207,20 @@ When writing any block of code that is logically subordinate to the line immedia
 
     // bad:
     alert( "I only put visual padding on one side of this string");
+    ```
+
+* For statements that include a block--i.e. `if`, `for`, `while`, etc, use additional whitespace as padding.
+    
+    ```javascript
+    // good:
+    if (arr[i] === num){
+      console.log(num);
+    }
+
+    // bad:
+    var(i=0; i<idx.length; i++){
+      count += i;
+    }
     ```
 
 * You may use it to align two similar lines, but it is not recommended. This pattern usually leads to unnecessary edits of many lines in your code every time you change a variable name.
