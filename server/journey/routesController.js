@@ -1,20 +1,20 @@
 var Q = require('q');
-var Route = require('./routesModel.js');
+var Journey = require('./JourneysModel.js');
 
-var findRoute = Q.nbind(Route.findOne, Route);
-var createRoute = Q.nbind(Route.create, Route);
+var findJourney = Q.nbind(Journey.findOne, Journey);
+var createJourney = Q.nbind(Journey.create, Journey);
 
 module.exports = {
-  saveRoute: function (journey) {
-    var route = journey;
+  saveJourney: function (journey) {
+    var journey = journey;
 
-    findRoute({route: route})
-      .then(function(route){
-        if(route){
-          next(new Error('Route already exist!'));
+    findJourney({journey: journey})
+      .then(function(journey){
+        if(journey){
+          next(new Error('Journey already exist!'));
         }else{
-          return createRoute({
-            route: route
+          return createJourney({
+            journey: journey
           });
         }
       })
