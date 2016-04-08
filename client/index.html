@@ -3,21 +3,22 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Thunder Routes</title>
+  <!-- styles -->
   <link rel="stylesheet" href="style.css">
+  <!-- External resources -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI"></script>
   <script src="lib/angular/angular.js"></script>
+  <!-- Our resources -->
   <script src="app/geoService.js"></script>
-
   <script src="app/app.js"></script>
-  <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>
   <script src="app/mapCtrl.js"></script>
   <script src="app/mapFactory.js"></script>
   <script src="app/geoService.js"></script>
 </head>
 <body ng-app="roadtrippin" ng-controller="mapController">
   <h1>Thunder Routes</h1>
-  <input id="start" type="text" placeholder="Enter start point" ng-model="route.origin"/>
-  <input id="end" type="text" placeholder="Enter end point" ng-model="route.destination" />
+  <input id="start" type="text" placeholder="Enter start point" ng-model="route.start"/>
+  <input id="end" type="text" placeholder="Enter end point" ng-model="route.end" />
   <select>
     <option value="1">1</option>
     <option value="2">2</option>
