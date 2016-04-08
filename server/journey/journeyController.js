@@ -1,5 +1,5 @@
 var Q = require('q');
-var Journey = require('./JourneysModel.js');
+var Journey = require('./journeyModel.js');
 
 var findJourney = Q.nbind(Journey.findOne, Journey);
 var createJourney = Q.nbind(Journey.create, Journey);
