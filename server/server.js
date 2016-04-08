@@ -10,13 +10,13 @@ app.use(parser.json());
 app.use(morgan('dev'));
 
 
-var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/roadtrippin';    
-mongoose.connect(mongoUri)   
+var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/roadtrippin';
+mongoose.connect(mongoUri)
    
-var db = mongoose.connection;    
-db.on('error', console.error.bind(console, 'connection error:'));    
-db.once('open', function() {   
-  console.log('Mongoose is connected');    
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Mongoose is connected');
 });
 
 
