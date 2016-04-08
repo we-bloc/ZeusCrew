@@ -21,6 +21,10 @@ angular.module('gservice', [])
         directionsDisplay.setMap(map);
       };
 
+      //Store current trip data so we can access it for saving.
+      //Properties will be added to this object every time a route is calculated.
+      googleMapService.thisTrip = {};
+
       //get waypoints
       var getWaypoints = function (waypointArray, numStops) {
         var points = [];
@@ -39,6 +43,7 @@ angular.module('gservice', [])
           };
           waypoints.push(waypoint);
         });
+        googleMapService.thisTrip.waypoints = waypoints;
         return waypoints;
       };
 
@@ -61,6 +66,12 @@ angular.module('gservice', [])
         };
         directionsService.route (request, function(result, status) {
           if (status == google.maps.DirectionsStatus.OK) {
+            
+            //save start and end points for later use
+            googleMapService.thisTrip.start = result.routes[0].legs[0].start_address;
+            googleMapService.thisTrip.end = result.routes[0].legs[0].end_address;
+
+            //format and send request for the same trip but with waypoints
             var stops = [];
             var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
             waypoints.forEach(function (w) {

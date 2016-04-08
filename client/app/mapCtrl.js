@@ -6,4 +6,9 @@ angular.module('roadtrippin.maps', ['gservice'])
     $scope.getRoute = function() {
       gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops);
     };
+
+    $scope.saveRoute = function () {
+      mapFactory.saveJourneyWithWaypoints(gservice.thisTrip);
+    };
+
   });
