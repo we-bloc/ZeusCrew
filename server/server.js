@@ -11,8 +11,8 @@ app.use(morgan('dev'));
 
 
 var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/roadtrippin';
-mongoose.connect(mongoUri)
-   
+mongoose.connect(mongoUri);
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
