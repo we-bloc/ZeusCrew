@@ -18,17 +18,36 @@
   <script src="app/geoService.js"></script>
 </head>
 <body ng-app="roadtrippin" ng-controller="mapController">
-  <h1>Thunder Routes</h1>
-  <input id="start" type="text" placeholder="Enter start point" ng-model="route.start"/>
-  <input id="end" type="text" placeholder="Enter end point" ng-model="route.end" />
-  <select>
-    <option value="1">1</option>
-    <option value="2">2</option>
-    <option value="3">3</option>
-    <option value="4">4</option>
-    <option value="5">5</option>
-  </select>
-  <button ng-click="getRoute()">Get Stops</button>
-  <div id="map"></div>
+  <div id="wrapper">
+    <header>
+      <h1>Thunder Routes</h1>
+    </header>
+      <form>
+        <label for="start">Start: </label>
+        <input id="start" type="text" placeholder="Enter start point" ng-model="route.start"/>
+        <label for="end">Destination: </label>
+        <input id="end" type="text" placeholder="Enter end point" ng-model="route.end" />
+        <select>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button ng-click="getRoute()">Get Stops</button>
+      </form>
+      <div id="left">
+        <div id="map"></div>
+      </div>
+      <div id="right">
+        <div id="info">
+          <h3>Your Stops</h3>
+          <!-- Need to add actual object name for ng-repeat -->
+          <div class="stop-info" ng-repeat="stopInfo in info"></div>
+        </div>
+        <div id="savedRoutes"></div>
+          <div></div>
+      </div>
+  </div>
 </body>
 </html>
