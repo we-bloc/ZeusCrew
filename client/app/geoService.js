@@ -1,5 +1,5 @@
 angular.module('gservice', [])
-    .factory('gservice', function($http, $q) {
+    .factory('gservice', function($http, $q, mapFactory) {
 
       var googleMapService = {};
 
@@ -68,7 +68,11 @@ angular.module('gservice', [])
           var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
           placesService.textSearch(placeRequests[i], function(res, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-              placesToStop.push(res[0].formatted_address);
+              var place = {
+                address: res[0].formatted_address,
+                name: res[0].name
+              }
+              placesToStop.push(place);
               doneSoFar ++;
               if (doneSoFar === placeRequests.length) {
                 deferred.resolve(placesToStop);
@@ -93,6 +97,7 @@ angular.module('gservice', [])
 
       //calculate a route
       googleMapService.calcRoute = function (start, end, numStops) {
+        var deferred = $q.defer();
         var request = {
           origin: start,
           destination: end,
@@ -110,10 +115,10 @@ angular.module('gservice', [])
             var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
             var promise = getNearbyThings(waypoints); //testing testing
             promise.then(function(placePoints) {
-              console.log(placePoints);
+              // mapFactory.listPlaces(placePoints);
               placePoints.forEach(function (w) {
                 stops.push({
-                  location: w,
+                  location: w.address,
                   stopover: true
                 });
               });
@@ -128,11 +133,13 @@ angular.module('gservice', [])
                 if (status === google.maps.DirectionsStatus.OK) {
                   directionsDisplay.setDirections(response);
                   var route = response.routes[0];
+                  deferred.resolve(placePoints);
                 }
               });
             });
           }
         });
+        return deferred.promise;
       };
 
 
