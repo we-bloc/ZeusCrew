@@ -9,6 +9,7 @@ angular.module('gservice', [])
       // Initialize the map
       var map, directionsDisplay;
       var directionsService = new google.maps.DirectionsService();
+      // var placesService = new google.maps.places.PlacesService();
 
       var initialize = function () {
         directionsDisplay = new google.maps.DirectionsRenderer();
@@ -47,6 +48,30 @@ angular.module('gservice', [])
         return waypoints;
       };
 
+      //get a single nearby attraction for each waypoint
+      var getNearbyThings = function (waypointArray, distance, type) {
+
+        
+        //build out an array of requests
+        var placeRequests = [];
+        waypointArray.forEach(function(w) {
+          placeRequests.push({
+            location: new google.maps.LatLng(w.lat, w.lng),
+            radius: distance || '500',
+            query: type || 'restaurant'
+          });
+        });
+        //query the google places service
+        for (var i = 0; i < placeRequests.length; i ++) {
+          var placesService = new google.maps.places.PlacesService(null, placeRequests[i].location);
+          placesService.textSearch(placeRequests[i], function(res, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+              console.log(results[0]);
+            }
+          });
+        }
+      };
+
       // Refresh, to re-initialize the map.
       // New data could be passed to initialize here
       googleMapService.refresh = function () {
@@ -74,6 +99,7 @@ angular.module('gservice', [])
             //format and send request for the same trip but with waypoints
             var stops = [];
             var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
+            getNearbyThings(waypoints); //testing testing
             waypoints.forEach(function (w) {
               stops.push({
                 location: new google.maps.LatLng(w.lat, w.lng),
