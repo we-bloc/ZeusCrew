@@ -1,5 +1,5 @@
 angular.module('gservice', [])
-    .factory('gservice', function($http) {
+    .factory('gservice', function($http, $q) {
 
       var googleMapService = {};
 
@@ -50,8 +50,9 @@ angular.module('gservice', [])
 
       //get a single nearby attraction for each waypoint
       var getNearbyThings = function (waypointArray, distance, type) {
-
-        
+        //async function, so we need a promise here:
+        var deferred = $q.defer();
+        var placesToStop = [];
         //build out an array of requests
         var placeRequests = [];
         waypointArray.forEach(function(w) {
@@ -62,14 +63,22 @@ angular.module('gservice', [])
           });
         });
         //query the google places service
+        var doneSoFar = 0; //counter for async
         for (var i = 0; i < placeRequests.length; i ++) {
-          var placesService = new google.maps.places.PlacesService(null, placeRequests[i].location);
+          var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
           placesService.textSearch(placeRequests[i], function(res, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
-              console.log(results[0]);
+              placesToStop.push(res[0].formatted_address);
+              doneSoFar ++;
+              if (doneSoFar === placeRequests.length) {
+                deferred.resolve(placesToStop);
+              }
+            } else {
+              deferred.reject('we had a problem');
             }
           });
         }
+        return deferred.promise;
       };
 
       // Refresh, to re-initialize the map.
@@ -99,25 +108,28 @@ angular.module('gservice', [])
             //format and send request for the same trip but with waypoints
             var stops = [];
             var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
-            getNearbyThings(waypoints); //testing testing
-            waypoints.forEach(function (w) {
-              stops.push({
-                location: new google.maps.LatLng(w.lat, w.lng),
-                stopover: true
+            var promise = getNearbyThings(waypoints); //testing testing
+            promise.then(function(placePoints) {
+              console.log(placePoints);
+              placePoints.forEach(function (w) {
+                stops.push({
+                  location: w,
+                  stopover: true
+                });
               });
-            });
-            var wyptRequest = {
-              origin: start,
-              destination: end,
-              waypoints: stops,
-              optimizeWaypoints: true,
-              travelMode: google.maps.TravelMode.DRIVING
-            };
-            directionsService.route(wyptRequest, function(response, status) {
-              if (status === google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(response);
-                var route = response.routes[0];
-              }
+              var wyptRequest = {
+                origin: start,
+                destination: end,
+                waypoints: stops,
+                optimizeWaypoints: true,
+                travelMode: google.maps.TravelMode.DRIVING
+              };
+              directionsService.route(wyptRequest, function(response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                  directionsDisplay.setDirections(response);
+                  var route = response.routes[0];
+                }
+              });
             });
           }
         });
