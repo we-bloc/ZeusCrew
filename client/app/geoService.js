@@ -1,5 +1,5 @@
 angular.module('gservice', [])
-    .factory('gservice', function($http) {
+    .factory('gservice', function($http, $q, mapFactory) {
 
       var googleMapService = {};
 
@@ -9,6 +9,7 @@ angular.module('gservice', [])
       // Initialize the map
       var map, directionsDisplay;
       var directionsService = new google.maps.DirectionsService();
+      // var placesService = new google.maps.places.PlacesService();
 
       var initialize = function () {
         directionsDisplay = new google.maps.DirectionsRenderer();
@@ -47,6 +48,43 @@ angular.module('gservice', [])
         return waypoints;
       };
 
+      //get a single nearby attraction for each waypoint
+      var getNearbyThings = function (waypointArray, distance, type) {
+        //async function, so we need a promise here:
+        var deferred = $q.defer();
+        var placesToStop = [];
+        //build out an array of requests
+        var placeRequests = [];
+        waypointArray.forEach(function(w) {
+          placeRequests.push({
+            location: new google.maps.LatLng(w.lat, w.lng),
+            radius: distance || '500',
+            query: type || 'restaurant'
+          });
+        });
+        //query the google places service
+        var doneSoFar = 0; //counter for async
+        for (var i = 0; i < placeRequests.length; i ++) {
+          var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
+          placesService.textSearch(placeRequests[i], function(res, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+              var place = {
+                address: res[0].formatted_address,
+                name: res[0].name
+              }
+              placesToStop.push(place);
+              doneSoFar ++;
+              if (doneSoFar === placeRequests.length) {
+                deferred.resolve(placesToStop);
+              }
+            } else {
+              deferred.reject('we had a problem');
+            }
+          });
+        }
+        return deferred.promise;
+      };
+
       // Refresh, to re-initialize the map.
       // New data could be passed to initialize here
       googleMapService.refresh = function () {
@@ -59,6 +97,7 @@ angular.module('gservice', [])
 
       //calculate a route
       googleMapService.calcRoute = function (start, end, numStops) {
+        var deferred = $q.defer();
         var request = {
           origin: start,
           destination: end,
@@ -74,27 +113,33 @@ angular.module('gservice', [])
             //format and send request for the same trip but with waypoints
             var stops = [];
             var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
-            waypoints.forEach(function (w) {
-              stops.push({
-                location: new google.maps.LatLng(w.lat, w.lng),
-                stopover: true
+            var promise = getNearbyThings(waypoints); //testing testing
+            promise.then(function(placePoints) {
+              // mapFactory.listPlaces(placePoints);
+              placePoints.forEach(function (w) {
+                stops.push({
+                  location: w.address,
+                  stopover: true
+                });
               });
-            });
-            var wyptRequest = {
-              origin: start,
-              destination: end,
-              waypoints: stops,
-              optimizeWaypoints: true,
-              travelMode: google.maps.TravelMode.DRIVING
-            };
-            directionsService.route(wyptRequest, function(response, status) {
-              if (status === google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(response);
-                var route = response.routes[0];
-              }
+              var wyptRequest = {
+                origin: start,
+                destination: end,
+                waypoints: stops,
+                optimizeWaypoints: true,
+                travelMode: google.maps.TravelMode.DRIVING
+              };
+              directionsService.route(wyptRequest, function(response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                  directionsDisplay.setDirections(response);
+                  var route = response.routes[0];
+                  deferred.resolve(placePoints);
+                }
+              });
             });
           }
         });
+        return deferred.promise;
       };
 
 

@@ -8,7 +8,7 @@
   <link href='https://fonts.googleapis.com/css?family=Fugaz+One|Source+Sans+Pro' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
   <!-- External resources -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
   <script src="lib/angular/angular.js"></script>
   <!-- Our resources -->
   <script src="app/geoService.js"></script>
@@ -43,11 +43,12 @@
         <div id="info">
           <h3>Your Stops</h3>
           <!-- Need to add actual object name for ng-repeat -->
-          <div class="stop-info" ng-repeat="stopInfo in info"></div>
+          <div class="stop-info" ng-repeat="place in places">{{place.name}}<br/>{{place.address}}</div>
         </div>
         <div id="savedRoutes"></div>
           <div></div>
       </div>
   </div>
+  <div id="invisible"></div>
 </body>
 </html>
