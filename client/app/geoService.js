@@ -48,7 +48,7 @@ angular.module('gservice', [])
           travelMode: google.maps.TravelMode.DRIVING
         };
         directionsService.route (request, function(result, status) {
-          if (status == google.maps.DirectionsStatus.OK) {  
+          if (status == google.maps.DirectionsStatus.OK) {
             // grab official start and end points for later use
             var officialStart = result.routes[0].legs[0].start_address;
             var officialEnd = result.routes[0].legs[0].end_address;

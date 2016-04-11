@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="style.css">
   <!-- External resources -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
+  <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
   <!-- <script src="lib/angular/angular.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
   <!-- Our resources -->
@@ -37,14 +38,29 @@
       </div>
       <div id="right">
         <div id="info">
-          <h3>Your Stops</h3>
+          <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Your Stops</h3>
           <!-- Need to add actual object name for ng-repeat -->
-          <div class="stop-info" ng-repeat="place in places"><b>{{place.name}}</b><br/>{{place.address}}</div>
+          <div class="info stop-info" ng-repeat="place in places">
+            <p class="stop-name">{{place.name}}</p>
+            <p class="stop-address">{{place.address}}</p>
+          </div>
         </div>
-        <div id="savedRoutes"></div>
-          <div></div>
+        <div id="savedRoutes">
+          <h3 class="infoHeader"><i class="fa fa-caret-right" aria-hidden="true"></i>Saved Routes</h3>
+          <div class="info save-routes" ng-repeat="route in routes">
+            <p class="route-start">Example Start</p>
+            <p class="route-end">Example End</p>
+            <div class="stop-count">4</div>
+          </div>
+        </div>
       </div>
   </div>
   <div id="invisible"></div>
+  <script>
+    $(".infoHeader").on('click', function(e){
+      $(this).parent().find(".info").toggle();
+      $(this).parent().find('i').toggleClass('fa-rotate-90');
+    })
+  </script>
 </body>
 </html>

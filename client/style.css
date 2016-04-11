@@ -1,7 +1,7 @@
 /*General*/
 * {margin:0; padding: 0;}
 body {font-family: "Source Sans Pro", Arial, Helvetica}
-#wrapper {margin: 0 auto; width: 75%;}
+#wrapper {margin: 0 auto; width: 900px;}
 
 /*Header*/
 header{margin: 0 auto; background-color: #003136}
@@ -14,12 +14,15 @@ input{margin: 0 10px 0 0;}
 /*Left*/
 #left{float: left;}
 
+
 /*Right*/
 #right{float: right;}
+h3{width: 390px; font:1.5em "Fugaz One"; color: #FFF; padding: 10px 0; background-color: #003136}
+#savedRoutes {margin: 10px 0 0 0}
+i {padding: 0 5px 0 10px}
 
 /*Map*/
 #map {
-  margin-top: 10px;
   height: 350px;
   width: 500px;
 }
