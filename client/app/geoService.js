@@ -64,7 +64,7 @@ angular.module('gservice', [])
                   stopover: true
                 });
               });
-              googleMapService.render(start, end, stops)
+              googleMapService.render(officialStart, officialEnd, stops)
               .then(function() {
                 deferred.resolve(placePoints);
               });
