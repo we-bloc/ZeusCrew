@@ -8,8 +8,8 @@
   <link href='https://fonts.googleapis.com/css?family=Fugaz+One|Source+Sans+Pro' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
   <!-- External resources -->
-  <script id="api" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
   <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
+  <script id="api" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
   <!-- <script src="lib/angular/angular.js"></script> -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
   <!-- Our resources -->
@@ -60,6 +60,7 @@
   <script>
     $(".infoHeader").on('click', function(e){
       $(this).parent().find(".info").toggle();
+      $(this).parent().find("button").toggle();
       $(this).parent().find('i').toggleClass('fa-rotate-90');
     })
   </script>
