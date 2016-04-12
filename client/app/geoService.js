@@ -1,5 +1,5 @@
 angular.module('gservice', [])
-    .factory('gservice', function($http, $q, mapFactory) {
+    .factory('gservice', function ($http, $q, mapFactory) {
 
       var googleMapService = {};
 
@@ -47,7 +47,7 @@ angular.module('gservice', [])
           destination: end,
           travelMode: google.maps.TravelMode.DRIVING
         };
-        directionsService.route (request, function(result, status) {
+        directionsService.route(request, function (result, status) {
           if (status == google.maps.DirectionsStatus.OK) {
             // grab official start and end points for later use
             var officialStart = result.routes[0].legs[0].start_address;
@@ -56,7 +56,7 @@ angular.module('gservice', [])
             var stops = [];
             var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
             var promise = getNearbyThings(waypoints); //testing testing
-            promise.then(function(placePoints) {
+            promise.then(function (placePoints) {
               // mapFactory.listPlaces(placePoints);
               placePoints.forEach(function (w) {
                 stops.push({
@@ -65,7 +65,7 @@ angular.module('gservice', [])
                 });
               });
               googleMapService.render(officialStart, officialEnd, stops)
-              .then(function() {
+              .then(function () {
                 deferred.resolve(placePoints);
               });
             });
@@ -88,7 +88,7 @@ angular.module('gservice', [])
           optimizeWaypoints: true,
           travelMode: google.maps.TravelMode.DRIVING
         };
-        directionsService.route(wyptRequest, function(response, status) {
+        directionsService.route(wyptRequest, function (response, status) {
           if (status === google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
             var route = response.routes[0];
@@ -126,7 +126,7 @@ angular.module('gservice', [])
         var placesToStop = [];
         //build out an array of requests
         var placeRequests = [];
-        waypointArray.forEach(function(w) {
+        waypointArray.forEach(function (w) {
           placeRequests.push({
             location: new google.maps.LatLng(w.lat, w.lng),
             radius: distance || '500',
@@ -135,16 +135,16 @@ angular.module('gservice', [])
         });
         //query the google places service each waypoint
         var doneSoFar = 0; //counter for async for loop
-        for (var i = 0; i < placeRequests.length; i ++) {
+        for (var i = 0; i < placeRequests.length; i++) {
           var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
-          placesService.textSearch(placeRequests[i], function(res, status) {
+          placesService.textSearch(placeRequests[i], function (res, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
               var place = {
                 address: res[0].formatted_address,
                 name: res[0].name
               };
               placesToStop.push(place);
-              doneSoFar ++;
+              doneSoFar++;
               if (doneSoFar === placeRequests.length) {
                 deferred.resolve(placesToStop);
               }

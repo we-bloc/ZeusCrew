@@ -8,9 +8,9 @@
   <link href='https://fonts.googleapis.com/css?family=Fugaz+One|Source+Sans+Pro' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="style.css">
   <!-- External resources -->
-  <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
-  <script id="api" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
   <!-- <script src="lib/angular/angular.js"></script> -->
+  <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
   <!-- Our resources -->
   <script src="app/geoService.js"></script>
@@ -22,6 +22,11 @@
 <body ng-app="roadtrippin" ng-controller="mapController">
   <div id="wrapper">
     <header>
+      <div id="funcNav">
+        <!-- Need to add username with augular -->
+        <p>{{ user.name }}</p>
+        <a ng-click="signOut()">Sign Out</a>
+      </div>
       <h1>Thunder Routes</h1>
     </header>
       <form>
@@ -42,26 +47,30 @@
           <!-- Need to add actual object name for ng-repeat -->
           <div class="info stop-info" ng-repeat="place in places">
             <p class="stop-name">{{place.name}}</p>
-            <p class="stop-address">{{place.address}}</p>
+            <p class="stop-address">{{place.address[0]}}</p>
+            <p class="stop-address">{{place.address[1]}}, {{place.address[2]}}</p>
+            <p class="stop-address">{{place.address[3]}}</p>
+
           </div>
           <button ng-click="saveRoute()">Save this route</button>
         </div>
         <div id="savedRoutes">
           <h3 class="infoHeader"><i class="fa fa-caret-right" aria-hidden="true"></i>Saved Routes</h3>
-          <div class="info save-routes" ng-repeat="route in routes">
-            <p class="route-start">Example Start</p>
-            <p class="route-end">Example End</p>
-            <div class="stop-count">4</div>
+          <div class="info save-routes" ng-repeat="route in savedRoutes">
+            <p class="route-start">{{ route.startPoint }}</p>
+            <p class="route-end">{{ route.endPoint }}</p>
+            <p class="saved-route-link" ng-click="viewSavedRoute(route.hash)">View this Route</p>
+            <div class="stop-count">{{ route.wayPoints.length }}</div>
           </div>
         </div>
       </div>
   </div>
   <div id="invisible"></div>
   <script>
-    $(".infoHeader").on('click', function(e){
+    $(".infoHeader").on("click", function (e){
       $(this).parent().find(".info").toggle();
       $(this).parent().find("button").toggle();
-      $(this).parent().find('i').toggleClass('fa-rotate-90');
+      $(this).parent().find("i").toggleClass("fa-rotate-90");
     })
   </script>
 </body>
