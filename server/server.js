@@ -22,6 +22,7 @@ db.once('open', function() {
 });
 
 app.post('/saveJourney', journeyController.saveJourney);
+app.get('/saveJourney', journeyController.getAll);
 
 var port = process.env.PORT || 8080;
 
