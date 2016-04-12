@@ -3,6 +3,8 @@ var morgan = require('morgan');
 var mongoose = require('mongoose');
 var parser = require('body-parser');
 
+var journeyController = require('./journey/journeyController.js');
+
 var app = express();
 
 app.use(express.static(__dirname + '/../client'));
@@ -19,13 +21,13 @@ db.once('open', function() {
   console.log('Mongoose is connected');
 });
 
-
+app.post('/saveJourney', journeyController.saveJourney);
 
 var port = process.env.PORT || 8080;
 
 
 app.listen(port, function() {
-  console.log("Listening to: " + port);
+  console.log('Listening to: ' + port);
 });
 
 module.exports = app;

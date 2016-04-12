@@ -5,20 +5,28 @@ var findJourney = Q.nbind(Journey.findOne, Journey);
 var createJourney = Q.nbind(Journey.create, Journey);
 
 module.exports = {
-  saveJourney: function (journey) {
-    var journey = journey;
+  saveJourney: function (req, res, next) { 
+    var start = req.body.start;
+    var end = req.body.end;
+    var waypoints = [];
 
-    findJourney({journey: journey})
-      .then(function(journey){
-        if(journey){
-          next(new Error('Journey already exist!'));
-        }else{
+    for (var i = 0; i < req.body.waypoints.length; i++) {
+      waypoints.push(req.body.waypoints[i].location);
+    }
+    
+    findJourney({wayPoints: waypoints})
+      .then(function (waypoint) {
+        if (!waypoint) {
           return createJourney({
-            journey: journey
+            startPoint: start,
+            endPoint: end,
+            wayPoints: waypoints
           });
+        } else {
+          next(new Error('Journey already exist!'));
         }
       })
-      .fail(function(error){
+      .catch(function (error) {
         next(error);
       });
   }

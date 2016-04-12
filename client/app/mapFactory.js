@@ -4,13 +4,14 @@ angular.module('roadtrippin.mapsFactory', [])
     
     //send endpoints and array of waypoints to the server
     var saveJourneyWithWaypoints = function (tripObject) {
-      console.log(JSON.stringify(tripObject))
       $http({
         method: 'POST',
         url: '/saveJourney',
         data: JSON.stringify(tripObject)
       }).then(function (res) {
-        console.log(res);
+        console.log('DATA SENT: ', res);
+      }).catch(function (err) {
+        console.log('ERROR FOUND: ', err);
       });
     };
 

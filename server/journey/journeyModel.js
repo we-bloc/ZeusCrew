@@ -4,12 +4,13 @@ var Q = require('q');
 
 var JourneySchema = new mongoose.Schema({
   startPoint: {
-    type: String,
-    required: true
+    type: String
   },
   endPoint: {
-    type: String,
-    required: true
+    type: String
+  },
+  wayPoints: {
+    type: [String]
   },
   hash: {
     type: String
