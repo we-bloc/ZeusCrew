@@ -130,29 +130,61 @@ angular.module('gservice', [])
           placeRequests.push({
             location: new google.maps.LatLng(w.lat, w.lng),
             radius: distance || '500',
-            query: type || 'restaurant'
+            query: type || 'restaurant',
+            order: waypointArray.indexOf(w)
           });
         });
         //query the google places service each waypoint
-        var doneSoFar = 0; //counter for async for loop
-        for (var i = 0; i < placeRequests.length; i++) {
-          var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
-          placesService.textSearch(placeRequests[i], function (res, status) {
+        var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'));
+
+        //generagtes nearby places synchronously, so order is preserved
+        var getPlacesToStop = function (i, placeRequests) {
+          if (i === placeRequests.length) {
+            deferred.resolve(placesToStop);
+            return;
+          }
+          var placeReq = placeRequests[i];
+          placesService.textSearch(placeReq, function (res, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
               var place = {
                 address: res[0].formatted_address,
-                name: res[0].name
+                name: res[0].name,
+                order: i
               };
               placesToStop.push(place);
-              doneSoFar++;
-              if (doneSoFar === placeRequests.length) {
-                deferred.resolve(placesToStop);
-              }
+              //calls function again, increments i to select next place request object
+              getPlacesToStop(i + 1, placeRequests);
             } else { //if Google doesn't send an OK status
               deferred.reject('we had a problem');
             }
           });
-        }
+        };
+        getPlacesToStop(0, placeRequests);
+      //Old functionality for to get places to stop;
+        // for (var i = 0; i < placeRequests.length; i++) {
+        //   // var order = placeRequests[i].order;
+        //   var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
+        //   placesService.textSearch(placeRequests[i], function (res, status) {
+        //     console.log(order);
+        //     if (status == google.maps.places.PlacesServiceStatus.OK) {
+        //       var place = {
+        //         address: res[0].formatted_address,
+        //         name: res[0].name,
+        //         order: order
+        //       };
+        //       placesToStop.push(place);
+        //       doneSoFar++;
+        //       if (doneSoFar === placeRequests.length) {
+        //         console.log(placesToStop);
+        //         deferred.resolve(placesToStop);
+        //       }
+        //     } else { //if Google doesn't send an OK status
+        //       deferred.reject('we had a problem');
+        //     }
+        //   });
+        //   var order = placeRequests[i].order;
+        //   console.log('order', order, 'place', placeRequests[i]);
+        // }
         return deferred.promise;
       };
 
