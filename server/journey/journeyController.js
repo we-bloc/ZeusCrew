@@ -11,7 +11,7 @@ module.exports = {
     var waypoints = [];
 
     for (var i = 0; i < req.body.waypoints.length; i++) {
-      waypoints.push(req.body.waypoints[i].location);
+      waypoints.push(req.body.waypoints[i].name, req.body.waypoints[i].location);
     }
     
     findJourney({wayPoints: waypoints})
