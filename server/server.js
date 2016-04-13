@@ -1,4 +1,5 @@
 var express = require('express');
+var util = require('../lib/utility');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var parser = require('body-parser');
@@ -21,8 +22,21 @@ db.once('open', function() {
   console.log('Mongoose is connected');
 });
 
-app.post('/saveJourney', journeyController.saveJourney);
-app.get('/saveJourney', journeyController.getAll);
+// Session Support /////////
+
+var session = require('express-session');
+app.use(session({
+  secret: '98u20kladsjfaklsjfjwe2303209',
+  resave: false,
+  saveUninitialized: true 
+}));
+
+app.get('/', util.checkUser, function(req, res) {
+  res.render('index');
+})
+
+app.post('/saveJourney', util.checkUser, journeyController.saveJourney);
+app.get('/saveJourney', util.checkUser, journeyController.getAll);
 
 var port = process.env.PORT || 8080;
 
