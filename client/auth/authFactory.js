@@ -8,7 +8,7 @@ angular.module('roadtrippin.authFactory', [])
       data: user
     })
     .then(function(resp) {
-      return resp.data;
+      return resp.data.token;
     });
   };
   
@@ -19,17 +19,23 @@ angular.module('roadtrippin.authFactory', [])
       data: user
     })
     .then(function(resp) {
-      return resp.data;
+      return resp.data.token;
     });
   };
   
+  var isAuth = function() {
+    return !!$window.localStorage.getItem('com.roadtrippin');
+  };
+  
   var signout = function() {
-    
+    $window.localStorage.removeItem('com.roadtrippin');
+    $location.path('/signin');
   };
   
   return {
     signin: signin,
     signup: signup,
+    isAuth: isAuth,
     signout: signout
   }
 });
