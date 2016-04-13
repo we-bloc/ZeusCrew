@@ -10,11 +10,12 @@ module.exports = {
     var end = req.body.end;
     var waypoints = [];
 
-    console.log('saving waypoints', req.body.waypoints)
-
     for (var i = 0; i < req.body.waypoints.length; i++) {
-      waypoints.push(req.body.waypoints[i].name, req.body.waypoints[i].location);
+      waypoints[req.body.waypoints[i].position] = [req.body.waypoints[i].name, req.body.waypoints[i].location]
     }
+
+    var waypointsCopy = [].concat.apply([], waypoints);
+    waypoints = waypointsCopy;
 
     findJourney({wayPoints: waypoints})
       .then(function (waypoint) {
@@ -34,12 +35,12 @@ module.exports = {
   },
 
   getAll: function (req, res, next) {
-    Journey.find({})
-      .then(function (data) {
-        res.status(200).send(data);
-      })
-      .catch(function(error) {
-        next(error);
-      });
+  Journey.find({})
+    .then(function (data) {
+      res.status(200).send(data);
+    })
+    .catch(function(error) {
+      next(error);
+    });
   }
 };
