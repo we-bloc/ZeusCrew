@@ -25,7 +25,7 @@ var createSha = function (points) {
 
 JourneySchema.pre('save', function(next) {
   var journey = this;
-  var hash = createSha(journey.startPoint + journey.endPoint);
+  var hash = createSha(journey.wayPoints.length.toString() + journey.startPoint + journey.endPoint);
   journey.hash = hash;
   next();
 });
