@@ -20,6 +20,7 @@ angular.module('roadtrippin.maps', ['gservice'])
             place.location = place.location.split(', ');
             $scope.places.push(place);
           });
+          console.log($scope.places)
         });
     };
 
@@ -44,6 +45,8 @@ angular.module('roadtrippin.maps', ['gservice'])
           for (var j = 0; j < $scope.savedRoutes[i].wayPoints.length; j++) {
             stops.push({location: $scope.savedRoutes[i].wayPoints[j], stopover: true});
           }
+          $scope.places = stops;
+          console.log(stops)
           gservice.render($scope.savedRoutes[i].startPoint, $scope.savedRoutes[i].endPoint, stops);
         }
       }
