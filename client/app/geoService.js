@@ -57,16 +57,9 @@ angular.module('gservice', [])
             var waypoints = getWaypoints(result.routes[0].overview_path, numStops);
             var promise = getNearbyThings(waypoints); //testing testing
             promise.then(function (placePoints) {
-              // mapFactory.listPlaces(placePoints);
-              placePoints.forEach(function (w) {
-                stops.push({
-                  location: w.address,
-                  stopover: true
-                });
-              });
-              googleMapService.render(officialStart, officialEnd, stops)
+              googleMapService.render(officialStart, officialEnd, placePoints)
               .then(function () {
-                deferred.resolve(placePoints);
+                deferred.resolve(googleMapService.thisTrip.waypoints);
               });
             });
           }
@@ -81,10 +74,17 @@ angular.module('gservice', [])
         googleMapService.thisTrip.start = start;
         googleMapService.thisTrip.end = end;
         googleMapService.thisTrip.waypoints = waypoints;
+        var stops = []; //format stops for Google request
+        waypoints.forEach(function (w) {
+          stops.push({
+            location: w.location,
+            stopover: true
+          });
+        });
         var wyptRequest = { //format the request for Google
           origin: start,
           destination: end,
-          waypoints: waypoints,
+          waypoints: stops,
           optimizeWaypoints: true,
           travelMode: google.maps.TravelMode.DRIVING
         };
@@ -92,6 +92,7 @@ angular.module('gservice', [])
           if (status === google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
             var route = response.routes[0];
+            sortWaypoints(response.routes[0].waypoint_order);
             deferred.resolve();
           }
         });
@@ -130,62 +131,40 @@ angular.module('gservice', [])
           placeRequests.push({
             location: new google.maps.LatLng(w.lat, w.lng),
             radius: distance || '500',
-            query: type || 'restaurant',
-            order: waypointArray.indexOf(w)
+            query: type || 'restaurant'
           });
         });
         //query the google places service each waypoint
-        var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'));
-
-        //generagtes nearby places synchronously, so order is preserved
-        var getPlacesToStop = function (i, placeRequests) {
-          if (i === placeRequests.length) {
-            deferred.resolve(placesToStop);
-            return;
-          }
-          var placeReq = placeRequests[i];
-          placesService.textSearch(placeReq, function (res, status) {
+        var doneSoFar = 0; //counter for async for loop
+        for (var i = 0; i < placeRequests.length; i++) {
+          var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
+          placesService.textSearch(placeRequests[i], function (res, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
               var place = {
-                address: res[0].formatted_address,
-                name: res[0].name,
-                order: i
+                location: res[0].formatted_address,
+                name: res[0].name
               };
               placesToStop.push(place);
-              //calls function again, increments i to select next place request object
-              getPlacesToStop(i + 1, placeRequests);
+              doneSoFar++;
+              if (doneSoFar === placeRequests.length) {
+                deferred.resolve(placesToStop);
+              }
             } else { //if Google doesn't send an OK status
               deferred.reject('we had a problem');
             }
           });
-        };
-        getPlacesToStop(0, placeRequests);
-      //Old functionality for to get places to stop;
-        // for (var i = 0; i < placeRequests.length; i++) {
-        //   // var order = placeRequests[i].order;
-        //   var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
-        //   placesService.textSearch(placeRequests[i], function (res, status) {
-        //     console.log(order);
-        //     if (status == google.maps.places.PlacesServiceStatus.OK) {
-        //       var place = {
-        //         address: res[0].formatted_address,
-        //         name: res[0].name,
-        //         order: order
-        //       };
-        //       placesToStop.push(place);
-        //       doneSoFar++;
-        //       if (doneSoFar === placeRequests.length) {
-        //         console.log(placesToStop);
-        //         deferred.resolve(placesToStop);
-        //       }
-        //     } else { //if Google doesn't send an OK status
-        //       deferred.reject('we had a problem');
-        //     }
-        //   });
-        //   var order = placeRequests[i].order;
-        //   console.log('order', order, 'place', placeRequests[i]);
-        // }
+        }
         return deferred.promise;
+      };
+
+      //Record order in 'position' property of each waypoint
+      var sortWaypoints = function (waypointOrder) {
+        for (var i = 0; i < googleMapService.thisTrip.waypoints.length; i++) {
+          var waypoint = googleMapService.thisTrip.waypoints[i];
+          var position = waypointOrder[i];
+          waypoint.position = position;
+        }
+        return;
       };
 
       return googleMapService;
