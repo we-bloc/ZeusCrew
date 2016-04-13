@@ -5,15 +5,18 @@ var findJourney = Q.nbind(Journey.findOne, Journey);
 var createJourney = Q.nbind(Journey.create, Journey);
 
 module.exports = {
-  saveJourney: function (req, res, next) { 
+  saveJourney: function (req, res, next) {
     var start = req.body.start;
     var end = req.body.end;
     var waypoints = [];
 
     for (var i = 0; i < req.body.waypoints.length; i++) {
-      waypoints.push(req.body.waypoints[i].name, req.body.waypoints[i].location);
+      waypoints[req.body.waypoints[i].position] = [req.body.waypoints[i].name, req.body.waypoints[i].location]
     }
-    
+
+    var waypointsCopy = [].concat.apply([], waypoints);
+    waypoints = waypointsCopy;
+
     findJourney({wayPoints: waypoints})
       .then(function (waypoint) {
         if (!waypoint) {
@@ -32,12 +35,12 @@ module.exports = {
   },
 
   getAll: function (req, res, next) {
-    Journey.find({})
-      .then(function (data) {
-        res.status(200).send(data);
-      })
-      .catch(function(error) {
-        next(error);
-      });
+  Journey.find({})
+    .then(function (data) {
+      res.status(200).send(data);
+    })
+    .catch(function(error) {
+      next(error);
+    });
   }
 };
