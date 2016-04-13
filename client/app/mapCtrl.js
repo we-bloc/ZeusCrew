@@ -41,12 +41,12 @@ angular.module('roadtrippin.maps', ['gservice'])
     $scope.viewSavedRoute = function (hash) {
       for (var i = 0; i < $scope.savedRoutes.length; i++) {
         if ($scope.savedRoutes[i].hash === hash) {
+          console.log('saved route', $scope.savedRoutes[i]);
           var stops = [];
           for (var j = 0; j < $scope.savedRoutes[i].wayPoints.length; j++) {
             stops.push({location: $scope.savedRoutes[i].wayPoints[j], stopover: true});
           }
           $scope.places = stops;
-          console.log(stops)
           gservice.render($scope.savedRoutes[i].startPoint, $scope.savedRoutes[i].endPoint, stops);
         }
       }
