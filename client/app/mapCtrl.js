@@ -32,7 +32,7 @@ angular.module('roadtrippin.maps', ['gservice'])
     };
 
     $scope.getAll = function () {
-      mapFactory.getAllRoutes().then(function(results) {
+      mapFactory.getAllRoutes().then(function (results) {
         $scope.savedRoutes = results;
       });
     };
@@ -40,9 +40,32 @@ angular.module('roadtrippin.maps', ['gservice'])
     $scope.viewSavedRoute = function (hash) {
       for (var i = 0; i < $scope.savedRoutes.length; i++) {
         if ($scope.savedRoutes[i].hash === hash) {
-          var stops = [];
+          //split up waypoints array into names ans locations. Even index ==== name, odd index === location
+          $scope.savedRoutes[i].stopLocations = [];
+          $scope.savedRoutes[i].stopNames = [];
           for (var j = 0; j < $scope.savedRoutes[i].wayPoints.length; j++) {
-            stops.push({location: $scope.savedRoutes[i].wayPoints[j], stopover: true});
+            if (j % 2 === 0) {
+              $scope.savedRoutes[i].stopNames.push($scope.savedRoutes[i].wayPoints[j]);
+            } else {
+              $scope.savedRoutes[i].stopLocations.push($scope.savedRoutes[i].wayPoints[j]);
+            }
+          }
+          //set $scope.places to saved stop data so stop data will display on page
+          var places = [];
+          for (var k = 0; k < $scope.savedRoutes[i].stopNames.length; k++) {
+            var location = $scope.savedRoutes[i].stopLocations[k].split(', ');
+            var place = {
+              name: $scope.savedRoutes[i].stopNames[k],
+              location: location,
+              position: k
+            };
+            places.push(place);
+          }
+          $scope.places = places;
+          //add stop locations to stops array, render stops to map
+          var stops = [];
+          for (var l = 0; l < $scope.savedRoutes[i].stopLocations.length; l++) {
+            stops.push({ location: $scope.savedRoutes[i].stopLocations[l], stopover: true });
           }
           gservice.render($scope.savedRoutes[i].startPoint, $scope.savedRoutes[i].endPoint, stops);
         }
