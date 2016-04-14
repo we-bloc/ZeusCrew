@@ -54,12 +54,12 @@
           <button ng-click="saveRoute()">Save this route</button>
         </div>
         <div id="savedRoutes">
-          <h3 class="infoHeader"><i class="fa fa-caret-right" aria-hidden="true"></i>Saved Routes</h3>
+          <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Saved Routes</h3>
           <div class="info save-routes" ng-repeat="route in savedRoutes">
             <p class="route-start">{{ route.startPoint }}</p>
             <p class="route-end">{{ route.endPoint }}</p>
             <p class="saved-route-link" ng-click="viewSavedRoute(route.hash)">View this Route</p>
-            <div class="stop-count">{{ route.wayPoints.length }}</div>
+            <div class="stop-count">{{ route.wayPoints.length/2 }}</div>
           </div>
         </div>
       </div>

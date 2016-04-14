@@ -8,19 +8,21 @@ angular.module('roadtrippin.maps', ['gservice'])
     //this is a call to our Google maps API factory for directions
     $scope.getRoute = function() {
       gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops)
-        .then(function(places) {
-          $scope.places = [];
-          //copy the places array before we start splitting things so our original stays in-tact
-          var placesCopy = [];
-          for (var i = 0; i < places.length; i++) {
-            //this apparently is needed for a clean copy...
-            placesCopy.push(JSON.parse(JSON.stringify(places[i])));
-          }
-          placesCopy.forEach(function(place) { //split address for easier formatting
-            place.location = place.location.split(', ');
-            $scope.places.push(place);
-          });
-        });
+        .then(function(places){splitLocations(places)});
+    };
+
+    var splitLocations = function (places) {
+      $scope.places = [];
+      //copy the places array before we start splitting things so our original stays in-tact
+      var placesCopy = [];
+      for (var i = 0; i < places.length; i++) {
+        //this apparently is needed for a clean copy...
+        placesCopy.push(JSON.parse(JSON.stringify(places[i])));
+      }
+      placesCopy.forEach(function (place) { //split address for easier formatting
+        place.location = place.location.split(', ');
+        $scope.places.push(place);
+      });
     };
 
     $scope.getLetter = function (i) {
@@ -53,7 +55,7 @@ angular.module('roadtrippin.maps', ['gservice'])
           //set $scope.places to saved stop data so stop data will display on page
           var places = [];
           for (var k = 0; k < $scope.savedRoutes[i].stopNames.length; k++) {
-            var location = $scope.savedRoutes[i].stopLocations[k].split(', ');
+            var location = $scope.savedRoutes[i].stopLocations[k];
             var place = {
               name: $scope.savedRoutes[i].stopNames[k],
               location: location,
@@ -61,13 +63,10 @@ angular.module('roadtrippin.maps', ['gservice'])
             };
             places.push(place);
           }
-          $scope.places = places;
           //add stop locations to stops array, render stops to map
-          var stops = [];
-          for (var l = 0; l < $scope.savedRoutes[i].stopLocations.length; l++) {
-            stops.push({ location: $scope.savedRoutes[i].stopLocations[l], stopover: true });
-          }
-          gservice.render($scope.savedRoutes[i].startPoint, $scope.savedRoutes[i].endPoint, stops);
+          console.log('places', places)
+          gservice.render($scope.savedRoutes[i].startPoint, $scope.savedRoutes[i].endPoint, places)
+          .then(function (places) { splitLocations(places) });
         }
       }
     };

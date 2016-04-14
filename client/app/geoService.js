@@ -93,7 +93,7 @@ angular.module('gservice', [])
             directionsDisplay.setDirections(response);
             var route = response.routes[0];
             sortWaypoints(response.routes[0].waypoint_order);
-            deferred.resolve();
+            deferred.resolve(waypoints);
           }
         });
         return deferred.promise;
