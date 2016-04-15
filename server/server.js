@@ -2,6 +2,7 @@ var express = require('express');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var parser = require('body-parser');
+var userController = require('./users/userController.js');
 
 var journeyController = require('./journey/journeyController.js');
 
@@ -20,9 +21,14 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Mongoose is connected');
 });
-
+  
 app.post('/saveJourney', journeyController.saveJourney);
 app.get('/saveJourney', journeyController.getAll);
+
+// app.post('/signin', userController.signin);
+// app.post('/signup', userController.signup);  
+// app.get('/signedin', userController.checkAuth);
+// app.get('/getUser', userController.getUser);
 
 var port = process.env.PORT || 8080;
 

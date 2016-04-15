@@ -11,22 +11,27 @@
   <link rel="stylesheet" href="style.css">
   <!-- External resources -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
-  <!-- <script src="lib/angular/angular.js"></script> -->
   <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-  <!-- Our resources --> 
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.min.js"></script>
+
+  <!-- Our resources -->
   <script src="app/geoService.js"></script>
   <script src="app/app.js"></script>
   <script src="app/mapCtrl.js"></script>
   <script src="app/mapFactory.js"></script>
   <script src="app/geoService.js"></script>
+  <script src="auth/auth.js"></script>
+  <script src="auth/authFactory.js"></script>
 </head>
 <body ng-app="roadtrippin" ng-controller="mapController">
+    <!-- <div ng-view></div> -->
     <header>
       <div id="funcNav">
         <!-- Need to add username with augular -->
         <p>{{ user.name }}</p>
-        <a class="signout" ng-click="signOut()">Sign Out</a>
+        <a ng-click="signup()">Sign Up</a>
+        <a ng-click="signout()">Sign Out</a>
       </div>
       <h1 class="title">Thunder Routes</h1>
     </header>
