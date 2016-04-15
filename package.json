@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/ZeusCrew/ZeusCrew#readme",
   "dependencies": {
-    "bcrypt": "^0.8.5",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
     "crypto": "0.0.3",
     "express": "^4.13.4",

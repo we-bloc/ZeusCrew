@@ -2,18 +2,22 @@ var User = require('./userModel.js');
 var Q = require('q');
 var jwt = require('jwt-simple');
 
+var findUser = Q.nbind(User.findOne, User);
+var createUser = Q.nbind(User.create, User);
+
 module.exports = {
   signin: function(req, res, next) {
+    console.log(req.body, 'THISISREQ');
+    // console.log(res, 'THISISRES111111111');
     var username = req.body.username;
     var password = req.body.password;
-    var findUser = Q.nbind(User.findOne, User);
     
     findUser({username: username})
       .then(function(user) {
         if(!user) {
           next(new Error('User does not exist'));
         } else {
-          return user.comparePassword(password)
+          return user.comparePasswords(password)
             .then(function(foundUser) {
               if(foundUser) {
                 var token = jwt.encode(user, 'route66');
@@ -32,23 +36,17 @@ module.exports = {
   signup: function(req, res, next) {
     var username = req.body.username;
     var password = req.body.password;
-    var create;
-    var newUser;
     
-    var findOne = Q.nbind(User.findOne, User);
-    
-    findOne({username: username})
+    findUser({username: username})
       .then(function(user) {
         if(user) {
           next(new Error('User already exists'));
         } else {
-          create = Q.nbind(User.create, User);
-          newUser = {
+          return createUser({
             username: username,
             password: password
-          };
+          });
         }
-        return create(newUser);
       })
       .then(function(user) {
         // create token to send back for authorization
@@ -70,6 +68,31 @@ module.exports = {
         .then(function(foundUser) {
           if(foundUser) {
             res.send(200);
+          } else {
+            res.send(401);
+          }
+        })
+        .fail(function(error) {
+          next(error);
+        });
+    }
+  },
+  
+  getUser: function(req, res, next) {
+    var token = req.headers['x-access-token'];
+    if(!token) {
+      next(new Error('No token'));
+    } else {
+      // decode token
+      var user = jwt.decode(token, 'route66');
+      // check if user is in database
+      
+      findUser({username: user.username})
+        .then(function(foundUser) {
+          if(foundUser) {
+            res.send({
+              username: foundUser.username
+          });
           } else {
             res.send(401);
           }

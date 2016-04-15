@@ -55,6 +55,7 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-var User = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('users', UserSchema);
+// var User = mongoose.model('User', UserSchema);
 
-model.exports = User;
+// module.exports = User;

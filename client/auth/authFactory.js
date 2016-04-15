@@ -9,6 +9,9 @@ angular.module('roadtrippin.authFactory', [])
     })
     .then(function(resp) {
       return resp.data.token;
+    })
+    .catch(function(error) {
+      console.log('ERROR: ', error);
     });
   };
   
@@ -20,6 +23,9 @@ angular.module('roadtrippin.authFactory', [])
     })
     .then(function(resp) {
       return resp.data.token;
+    })
+    .catch(function(error) {
+      console.log('ERROR: ', error);
     });
   };
   
@@ -37,5 +43,5 @@ angular.module('roadtrippin.authFactory', [])
     signup: signup,
     isAuth: isAuth,
     signout: signout
-  }
+  };
 });
