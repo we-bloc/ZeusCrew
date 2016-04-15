@@ -6,13 +6,15 @@
   <!-- styles -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Fugaz+One|Source+Sans+Pro' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
   <link rel="stylesheet" href="style.css">
   <!-- External resources -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
   <!-- <script src="lib/angular/angular.js"></script> -->
   <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-  <!-- Our resources -->
+  <!-- Our resources --> 
   <script src="app/geoService.js"></script>
   <script src="app/app.js"></script>
   <script src="app/mapCtrl.js"></script>
@@ -20,50 +22,60 @@
   <script src="app/geoService.js"></script>
 </head>
 <body ng-app="roadtrippin" ng-controller="mapController">
-  <div id="wrapper">
     <header>
       <div id="funcNav">
         <!-- Need to add username with augular -->
         <p>{{ user.name }}</p>
-        <a ng-click="signOut()">Sign Out</a>
+        <a class="signout" ng-click="signOut()">Sign Out</a>
       </div>
-      <h1>Thunder Routes</h1>
+      <h1 class="title">Thunder Routes</h1>
     </header>
-      <form>
-        <label for="start">Start: </label>
-        <input id="start" type="text" placeholder="Enter start point" ng-model="route.start"/>
-        <label for="end">Destination: </label>
-        <input id="end" type="text" placeholder="Enter end point" ng-model="route.end" />
-        <select ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
-        </select>
-        <button ng-click="getRoute()">Get Stops</button>
-      </form>
-      <div id="left">
+
+    <div class="spacer"></div>
+
+    <form class="form-inline">
+      <div class="form-group">
+        <div class="col-xs-12">
+          <label for="start">Start: </label>
+          <input id="start" type="text" class="form-control" placeholder="Enter start point" ng-model="route.start"/>
+          <label for="end">Destination: </label>
+          <input id="end" type="text" class="form-control" placeholder="Enter end point" ng-model="route.end" />
+          <!-- <select class="form-control" ng-model ="selectedOption" ng-options="n for n in route.stopOptions" >
+          </select> -->
+          <select class="form-control selectpicker" ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
+          </select>
+          <button class="btn btn-default" ng-click="getRoute()">Get Stops
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="container">
+      <div class="col-xs-8">
         <div id="map"></div>
       </div>
-      <div id="right">
-        <div id="info">
-          <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Your Stops</h3>
-          <div class="info stop-info" ng-repeat="place in places | orderBy:'position'">
-            <p class="stop-name">{{getLetter(place.position)}}. {{place.name}}</p>
-            <p class="stop-address">{{place.location[0]}}</p>
-            <p class="stop-address">{{place.location[1]}}, {{place.location[2]}}</p>
-            <p class="stop-address">{{place.location[3]}}</p>
-
-          </div>
-          <button ng-click="saveRoute()">Save this route</button>
+      <div class="col-xs-4 info-content pre-scrollable">
+        <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Your Stops</h3>
+        <div class="info stop-info" ng-repeat="place in places | orderBy:'position'">
+          <p class="stop-name">{{getLetter(place.position)}}. {{place.name}}</p>
+          <p class="stop-address">{{place.location[0]}}</p>
+          <p class="stop-address">{{place.location[1]}}, {{place.location[2]}}</p>
+          <p class="stop-address">{{place.location[3]}}</p>
         </div>
-        <div id="savedRoutes">
-          <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Saved Routes</h3>
-          <div class="info save-routes" ng-repeat="route in savedRoutes">
-            <p class="route-start">{{ route.startPoint }}</p>
-            <p class="route-end">{{ route.endPoint }}</p>
-            <p class="saved-route-link" ng-click="viewSavedRoute(route.hash)">View this Route</p>
-            <div class="stop-count">{{ route.wayPoints.length/2 }}</div>
-          </div>
-        </div>
+        <button class="routeBtn btn btn-block" ng-click="saveRoute()">Save this route</button>
       </div>
-  </div>
+    </div>
+
+    <div class="col-xs-offset-1 col-xs-10 savedRoutes">
+      <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Saved Routes</h3>
+      <div class="info save-routes" ng-repeat="route in savedRoutes">
+        <p class="route-start">{{ route.startPoint }}</p>
+        <p class="route-end">{{ route.endPoint }}</p>
+        <p class="saved-route-link" ng-click="viewSavedRoute(route.hash)">View this Route</p>
+        <div class="stop-count">{{ route.wayPoints.length/2 }}</div>
+      </div>
+    </div>
+
   <div id="invisible"></div>
   <script>
     $(".infoHeader").on("click", function (e){
