@@ -2,7 +2,6 @@ var express = require('express');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var parser = require('body-parser');
-// var path = require('path');
 var userController = require('./users/userController.js');
 
 var journeyController = require('./journey/journeyController.js');
@@ -26,9 +25,9 @@ db.once('open', function() {
 app.post('/saveJourney', journeyController.saveJourney);
 app.get('/saveJourney', journeyController.getAll);
 
-app.post('/signin', userController.signin);
-app.post('/signup', userController.signup);  
-app.get('/signedin', userController.checkAuth);
+// app.post('/signin', userController.signin);
+// app.post('/signup', userController.signup);  
+// app.get('/signedin', userController.checkAuth);
 // app.get('/getUser', userController.getUser);
 
 var port = process.env.PORT || 8080;

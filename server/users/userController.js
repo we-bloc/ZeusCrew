@@ -7,8 +7,6 @@ var createUser = Q.nbind(User.create, User);
 
 module.exports = {
   signin: function(req, res, next) {
-    console.log(req.body, 'THISISREQ');
-    // console.log(res, 'THISISRES111111111');
     var username = req.body.username;
     var password = req.body.password;
     
