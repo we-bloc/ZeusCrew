@@ -83,6 +83,16 @@
       $(this).parent().find("button").toggle();
       $(this).parent().find("i").toggleClass("fa-rotate-90");
     })
+
+    var startAutoComplete = new google.maps.places.Autocomplete(   
+    document.getElementById('start'), {
+      types: ['geocode']
+    });
+
+    var endAutoComplete = new google.maps.places.Autocomplete(   
+    document.getElementById('end'), {
+      types: ['geocode']
+    });
   </script>
 </body>
 </html>
