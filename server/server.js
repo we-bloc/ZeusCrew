@@ -1,8 +1,10 @@
 var express = require('express');
-var util = require('../lib/utility');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 var parser = require('body-parser');
+// var util = require('../client/lib/utility');
+var path = require('path');
+var authController = require('./auth/authC')
 
 var journeyController = require('./journey/journeyController.js');
 
@@ -21,22 +23,9 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Mongoose is connected');
 });
-
-// Session Support /////////
-
-var session = require('express-session');
-app.use(session({
-  secret: '98u20kladsjfaklsjfjwe2303209',
-  resave: false,
-  saveUninitialized: true 
-}));
-
-app.get('/', util.checkUser, function(req, res) {
-  res.render('index');
-})
-
-app.post('/saveJourney', util.checkUser, journeyController.saveJourney);
-app.get('/saveJourney', util.checkUser, journeyController.getAll);
+  
+app.post('/saveJourney', journeyController.saveJourney);
+app.get('/saveJourney', journeyController.getAll);
 
 var port = process.env.PORT || 8080;
 
