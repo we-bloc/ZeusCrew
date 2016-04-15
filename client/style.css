@@ -46,6 +46,11 @@ form * {
   height: 40px;
 }
 
+.pac-container:after {                   
+  background-image: none !important; 
+  height: 0px;
+}
+
 .spacer {
   height: 100px;
   margin-bottom: 25px;
