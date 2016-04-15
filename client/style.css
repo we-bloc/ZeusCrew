@@ -1,35 +1,90 @@
-/*General*/
-* {margin:0; padding: 0;}
-body {font-family: "Source Sans Pro", Arial, Helvetica}
-#wrapper {margin: 0 auto; width: 900px;}
+*, *:before, *:after {
+  box-sizing: border-box;
+}
 
-/*Header*/
-header{margin: 0 auto; background-color: #003136}
-h1{text-align: center; font:3em "Fugaz One"; color: #FFF; padding: 20px;}
-#funcNav {float: right; margin: 10px 10px 0 0}
-#funcNav a:nth-child(1){border-right: 1px solid #FFF}
-#funcNav a, #funcNav p {color: #FFF; text-decoration: none; padding: 0 5px 0 5px}
+body {
+  font-family: "Source Sans Pro", Arial, Helvetica;
+}
 
-/*Form*/
-form {margin: 0 auto; max-width: 520px; padding: 30px;}
-input{margin: 0 10px 0 0;}
+header {
+  background-color: #003136;
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+}
 
-/*Left*/
-#left{float: left;}
+h1 {
+  text-align: center; 
+  font: 3em "Fugaz One"; 
+  color: white; 
+}
 
+.signout {
+  float: right;
+  margin-right: 25px;
+  color: white;
+  cursor: pointer;
+}
 
-/*Right*/
-#right{float: right;}
-h3{width: 390px; font:1.5em "Fugaz One"; color: #FFF; padding: 10px 0; background-color: #003136}
-#savedRoutes {margin: 10px 0 0 0}
-i {padding: 0 5px 0 10px}
-.info{padding: 10px 0 10px 0; border-bottom: 1px solid black}
-.stop-name {font-size:1.3em;}
-#info button {margin: 10px 0 0 0;}
-.saved-route-link {color: orange;}
+.signout:hover {
+  text-decoration: none;
+  color: orange;
+}
 
-/*Map*/
+form {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+form * {
+  margin-right: 10px;
+}
+
+.form-control {
+  height: 40px;
+}
+
+.spacer {
+  height: 100px;
+  margin-bottom: 25px;
+  overflow: hidden;
+}
+
 #map {
   height: 350px;
-  width: 500px;
+}
+
+h3 {
+ font:1.5em "Fugaz One"; 
+ color: #FFF; 
+ padding: 10px 0;
+ background-color: #003136;
+}
+
+.info-content {
+  overflow: scroll;
+}
+
+.info {
+  padding: 5px 0; 
+  border-bottom: 1px solid black;
+}
+
+.stop-name {
+  font-size:1.3em;
+}
+
+.stop-address {
+  line-height: 5px;
+}
+
+.routeBtn {
+  margin-top: 10px;
+}
+
+.container {
+  margin-bottom: 25px;
+  overflow: hidden;
 }
