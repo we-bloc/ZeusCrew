@@ -9,28 +9,32 @@ body {
 header {
   background-color: #003136;
   width: 100%;
-  height: 100px;
+  height: 120px;
   position: fixed;
   top: 0;
   z-index: 999;
 }
 
 h1 {
-  text-align: center; 
-  font: 3em "Fugaz One"; 
-  color: white; 
+  text-align: center;
+  font: 3em "Fugaz One";
+  color: white;
+  margin-top: 30px;
 }
 
-.signout {
+#funcNav{
   float: right;
+}
+
+#signout, #signup {
   margin-right: 25px;
   color: white;
   cursor: pointer;
 }
 
-.signout:hover {
+#signout:hover, #signup:hover {
   text-decoration: none;
-  color: orange;
+  color: #F2932E;
 }
 
 form {
@@ -42,17 +46,22 @@ form * {
   margin-right: 10px;
 }
 
+.btn:hover {
+  cursor: pointer;
+  background-color: #F2932E;
+}
+
 .form-control {
   height: 40px;
 }
 
-.pac-container:after {                   
-  background-image: none !important; 
+.pac-container:after {
+  background-image: none !important;
   height: 0px;
 }
 
 .spacer {
-  height: 100px;
+  height: 120px;
   margin-bottom: 25px;
   overflow: hidden;
 }
@@ -61,11 +70,19 @@ form * {
   height: 350px;
 }
 
+i {
+  padding: 0 10px;
+}
+
 h3 {
- font:1.5em "Fugaz One"; 
- color: #FFF; 
+ font:1.5em "Fugaz One";
+ color: #FFF;
  padding: 10px 0;
  background-color: #003136;
+}
+
+saved-routes .info-header{
+  margin-bottom: 0;
 }
 
 .info-content {
@@ -73,7 +90,7 @@ h3 {
 }
 
 .info {
-  padding: 5px 0; 
+  padding: 5px 0;
   border-bottom: 1px solid black;
 }
 
@@ -93,3 +110,20 @@ h3 {
   margin-bottom: 25px;
   overflow: hidden;
 }
+
+
+.route-start, .route-end{
+  margin-bottom: 0
+}
+
+.stop-count, .saved-route-link{
+  text-align: center;
+}
+
+.stop-count {
+  vertical-align: middle;
+}
+
+/*.saved-route-link{
+  margin: 0 auto;
+}*/
