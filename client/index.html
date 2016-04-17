@@ -4,14 +4,16 @@
   <meta charset="UTF-8">
   <title>Thunder Routes</title>
   <!-- styles -->
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Fugaz+One|Source+Sans+Pro' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
   <link rel="stylesheet" href="style.css">
   <!-- External resources -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
   <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-route.min.js"></script>
 
@@ -26,14 +28,19 @@
 </head>
 <body ng-app="roadtrippin" ng-controller="mapController">
     <!-- <div ng-view></div> -->
-    <header>
-      <div id="funcNav">
-        <!-- Need to add username with augular -->
-        <p>{{ user.name }}</p>
-        <a href="#" id="signup" ng-click="signup()">Sign Up</a>
-        <a href="#" id="signout" ng-click="signout()">Sign Out</a>
+    <header class="col-xs-12">
+      <div class="dropdown col-xs-offset-10 col-xs-2" id="funcNav">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span class="acct">Account</span>
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="#" id="signup" ng-click="signup()">Sign Up</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
+        </ul>
       </div>
-      <h1 class="title">Thunder Routes</h1>
+      <h1 class="title col-xs-10">Thunder Routes</h1>
     </header>
 
     <div class="spacer"></div>
@@ -71,7 +78,7 @@
       </div>
     </div>
 
-    <div class="col-xs-offset-1 col-xs-10 savedRoutes">
+    <div class="col-xs-10 savedRoutes">
       <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Saved Routes</h3>
       <div class="row info save-routes" ng-repeat="route in savedRoutes">
         <div class="col-xs-4">
@@ -79,7 +86,7 @@
           <p class="route-end">To: {{ route.endPoint }}</p>
         </div>
         <div class="col-xs-4">
-          <div class="stop-count">Number of stops: {{ route.wayPoints.length/2 }}</div>
+          <div class="stop-count">Number of stops: <br /> {{ route.wayPoints.length/2 }}</div>
         </div>
         <div class="col-xs-4 centered">
           <button class="saved-route-link btn" ng-click="viewSavedRoute(route.hash)">View this Route</button>
