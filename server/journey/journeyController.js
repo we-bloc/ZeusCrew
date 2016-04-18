@@ -35,12 +35,12 @@ module.exports = {
   },
 
   getAll: function (req, res, next) {
-  Journey.find({})
-    .then(function (data) {
-      res.status(200).send(data);
-    })
-    .catch(function(error) {
-      next(error);
-    });
+    Journey.find({})
+      .then(function (data) {
+        res.status(200).send(data);
+      })
+      .catch(function(error) {
+        next(error);
+      });
   }
 };

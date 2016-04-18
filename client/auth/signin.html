@@ -1,10 +1,10 @@
 <div id="signin">
-  <h1>Signin</h1>
-  <form name="signinForm" ng-submit="signin()">
-      <input type="text" ng-model="user.username">
-      <input type="password" ng-model="user.password">
-      <button>Sign In</button>
+  <h1>Sign in</h1>
+  <form name="signinForm" ng-submit="signin(signinForm.$valid)">
+	  <input type="text" placeholder="username" ng-model="user.username" required>
+	  <input type="password" placeholder="password" ng-model="user.password" required>
+	  <button>Sign In</button>
   </form>
-    <a href="#/signup">Don't have an account? <strong>Signup</strong>...</a>
+    <a href="#/signup">Don't have an account? <strong>Signup</strong></a>
   </div>
 </div>

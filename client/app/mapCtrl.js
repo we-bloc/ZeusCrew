@@ -8,7 +8,7 @@ angular.module('roadtrippin.maps', ['gservice'])
     //this is a call to our Google maps API factory for directions
     $scope.getRoute = function() {
       gservice.calcRoute($scope.route.start, $scope.route.end, $scope.route.numStops)
-        .then(function(places){splitLocations(places)});
+        .then(function(places) { splitLocations(places); });
     };
 
     var splitLocations = function (places) {
@@ -64,12 +64,15 @@ angular.module('roadtrippin.maps', ['gservice'])
             places.push(place);
           }
           //add stop locations to stops array, render stops to map
-          console.log('places', places)
           gservice.render($scope.savedRoutes[i].startPoint, $scope.savedRoutes[i].endPoint, places)
-          .then(function (places) { splitLocations(places) });
+          .then(function (places) { splitLocations(places); });
         }
       }
     };
 
     $scope.getAll();
+
+    $scope.signout = function () {
+      mapFactory.signout();
+    };
   });
