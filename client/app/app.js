@@ -49,8 +49,11 @@ angular.module('roadtrippin', [
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
     if (toState && toState.authenticate && !authFactory.isAuth()) {
       $location.url('/signin');
-    } else if (toState.url === '/signin' || toState.url === '/signup') {
+    } else if (toState && toState.authenticate && authFactory.isAuth()) {
       $location.url('/homepage');
     }
+    // } else if (toState.url === '/signin' || toState.url === '/signup') {
+    //   $location.url('/homepage');
+    // }
   });
 });
