@@ -3,9 +3,9 @@
   <div class="form-group">
     <div class="col-xs-12">
       <label for="start">Start: </label>
-      <input id="start" type="text" class="form-control" autofocus placeholder="Enter start point" ng-model="route.start"/>
+      <input id="start" type="text" class="form-control" autofocus placeholder="Enter start point"/>
       <label for="end">Destination: </label>
-      <input id="end" type="text" class="form-control" placeholder="Enter end point" ng-model="route.end" />
+      <input id="end" type="text" class="form-control" placeholder="Enter end point" />
       <!-- <select class="form-control" ng-model ="selectedOption" ng-options="n for n in route.stopOptions" >
       </select> -->
       <select class="form-control selectpicker" ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
@@ -60,15 +60,5 @@ $(".infoHeader").on("click", function (e){
   $(this).parent().find(".info").toggle();
   $(this).parent().find("button").toggle();
   $(this).parent().find("i").toggleClass("fa-rotate-90");
-})
-
-var startAutoComplete = new google.maps.places.Autocomplete(
-document.getElementById('start'), {
-  types: ['geocode']
-});
-
-var endAutoComplete = new google.maps.places.Autocomplete(
-document.getElementById('end'), {
-  types: ['geocode']
 });
 </script>
