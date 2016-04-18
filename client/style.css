@@ -86,7 +86,8 @@ form * {
 }
 
 #map {
-  height: 350px;
+  height: 400px;
+  max-height: 100%;
 }
 
 .pac-container:after {
@@ -124,6 +125,10 @@ h3 {
   padding: 25px 0;
   text-align: center;
   border-bottom: 2px groove #d5d8d3;
+}
+
+.info:last-of-type {
+  border-bottom: none;
 }
 
 .stop-name {
