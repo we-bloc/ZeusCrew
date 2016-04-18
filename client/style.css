@@ -50,8 +50,7 @@ h1 {
   color: black;
 }
 
-#signup:hover,
-#signout:hover {
+.dropdown-menu>li>a:hover {
   text-decoration: none;
   color: #F2932E;
 }
