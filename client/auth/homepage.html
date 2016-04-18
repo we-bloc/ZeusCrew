@@ -1,5 +1,5 @@
-<header class="col-xs-12">
-  <div class="dropdown col-xs-offset-10 col-xs-2" id="funcNav">
+<header class="col-xs-12" id="funcNav">
+  <div class="dropdown col-xs-offset-10 col-xs-2">
     <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <span class="acct">Account</span>
       <span class="caret"></span>
@@ -19,7 +19,7 @@
   <div class="form-group">
     <div class="col-xs-12">
       <label for="start">Start: </label>
-      <input id="start" type="text" class="form-control" placeholder="Enter start point" ng-model="route.start"/>
+      <input id="start" type="text" class="form-control" autofocus placeholder="Enter start point" ng-model="route.start"/>
       <label for="end">Destination: </label>
       <input id="end" type="text" class="form-control" placeholder="Enter end point" ng-model="route.end" />
       <!-- <select class="form-control" ng-model ="selectedOption" ng-options="n for n in route.stopOptions" >

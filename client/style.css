@@ -6,7 +6,7 @@ body {
   font-family: "Roboto", Arial, Helvetica;
 }
 
-header {
+#funcNav {
   background-color: #003136;
   width: 100%;
   max-width: 100%;
