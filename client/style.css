@@ -81,8 +81,11 @@ form * {
 }
 
 .container {
-  margin-bottom: 25px;
-  overflow: hidden;
+  padding: 15px 0;
+}
+
+.row{
+  margin: 0 15px 25px;
 }
 
 #map {
