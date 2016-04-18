@@ -1,5 +1,5 @@
 angular.module('roadtrippin.maps', ['gservice'])
-  .controller('mapController', function($scope, mapFactory, gservice) {
+  .controller('mapController', function($scope, mapFactory, gservice, $location, $anchorScroll) {
     $scope.route = {};
     $scope.route.stopOptions = [1, 2, 3, 4, 5];
     $scope.places = [];
@@ -40,6 +40,8 @@ angular.module('roadtrippin.maps', ['gservice'])
     };
 
     $scope.viewSavedRoute = function (hash) {
+      $location.hash('top');
+      $anchorScroll();
       for (var i = 0; i < $scope.savedRoutes.length; i++) {
         if ($scope.savedRoutes[i].hash === hash) {
           //split up waypoints array into names ans locations. Even index ==== name, odd index === location
