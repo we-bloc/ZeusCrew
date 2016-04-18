@@ -11,7 +11,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
   <link rel="stylesheet" href="style.css">
   <!-- External resources -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtSjBdJRohMoWi4nG4odkKwuR9rxoRSBI&libraries=places"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm9HMROPzOUCU3lA--gnGwB3pfsZTZYD0&libraries=places"></script>
   <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
@@ -27,24 +27,6 @@
   <script src="auth/authFactory.js"></script>
 </head>
 <body ng-app="roadtrippin">
-
-<!-- Header -->
-<header class="col-xs-12" id="funcNav">
-  <a id="#top"></a>
-  <div class="dropdown col-xs-offset-10 col-xs-2">
-    <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-      <span class="acct">Account</span>
-      <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-      <li><a href="#" id="signup" ng-click="signup()">Sign Up</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
-    </ul>
-  </div>
-  <h1 class="title col-xs-10">Thunder Routes</h1>
-</header>
-
 <div class="spacer"></div>
 
   <div ui-view></div>

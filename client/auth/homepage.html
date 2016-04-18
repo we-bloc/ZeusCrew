@@ -1,16 +1,32 @@
+<!-- Header -->
+<header class="col-xs-12" id="funcNav">
+  <a id="#top"></a>
+  <div class="dropdown col-xs-offset-10 col-xs-2">
+    <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <span class="acct">Account</span>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li><p id="signup">Welcome, {{user.username}}!</p></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
+    </ul>
+  </div>
+  <h1 class="title col-xs-10">Thunder Routes</h1>
+</header>
 <!-- Search form -->
 <form class="form-inline">
   <div class="form-group">
     <div class="col-xs-12">
       <label for="start">Start: </label>
-      <input id="start" type="text" class="form-control" autofocus placeholder="Enter start point"/>
+      <input id="start" type="text" class="form-control" autofocus placeholder="Enter start point" ng-model="startInput" />
       <label for="end">Destination: </label>
-      <input id="end" type="text" class="form-control" placeholder="Enter end point" />
+      <input id="end" type="text" class="form-control" placeholder="Enter end point" ng-model="endInput" />
       <!-- <select class="form-control" ng-model ="selectedOption" ng-options="n for n in route.stopOptions" >
       </select> -->
       <select class="form-control selectpicker" ng-model ="route.numStops" ng-options="n for n in route.stopOptions">
       </select>
-      <button class="btn btn-default" ng-click="getRoute()">Get Stops
+      <button id="search-btn" class="btn btn-default" ng-click="getRoute()">Get Stops
       </button>
     </div>
   </div>
@@ -61,4 +77,9 @@ $(".infoHeader").on("click", function (e){
   $(this).parent().find("button").toggle();
   $(this).parent().find("i").toggleClass("fa-rotate-90");
 });
+
+$ ("#seatch-btn").on("click", function(e){
+  $("start").val("")
+  $("end").val("")
+})
 </script>
