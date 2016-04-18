@@ -19,11 +19,8 @@
 ## Requirements
 
 - Fill out later.x
-- Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+- Node 5.8.x
+- MongoDB 3.2.x
 
 ## Development
 - Fill out later.x
