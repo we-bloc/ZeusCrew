@@ -12,7 +12,7 @@ app.use(parser.json());
 app.use(morgan('dev'));
 
 
-var mongoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/roadtrippin';
+var mongoUri = process.env.MONGODB_URI || 'mongodb://localhost/roadtrippin';
 mongoose.connect(mongoUri);
 
 var db = mongoose.connection;
