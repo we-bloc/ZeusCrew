@@ -81,12 +81,15 @@ form * {
 }
 
 .container {
-  margin-bottom: 25px;
-  overflow: hidden;
+  padding: 15px 0;
+}
+
+.row{
+  margin: 0 15px 25px;
 }
 
 #map {
-  height: 350px;
+  height: 415px;
 }
 
 .pac-container:after {
@@ -116,14 +119,23 @@ h3 {
   top: 50%;
 }
 
+.infoHeader {
+  margin-top: 0;
+}
+
 .info-content {
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 .info {
   padding: 25px 0;
+  margin: 0;
   text-align: center;
   border-bottom: 2px groove #d5d8d3;
+}
+
+.info:last-of-type {
+  border-bottom: none;
 }
 
 .stop-name {
