@@ -3,8 +3,10 @@
   <form name="signinForm" ng-submit="signin(signinForm.$valid)">
 	  <input type="text" placeholder="username" ng-model="user.username" required>
 	  <input type="password" placeholder="password" ng-model="user.password" required>
-	  <button>Sign In</button>
+	  <button class="btn">Sign In</button>
   </form>
-    <a href="#/signup">Don't have an account? <strong>Signup</strong></a>
+    <div class="text-center">
+      Don't have an account? &nbsp; <button class="btn"><a href="#/signup">Sign up</a></button></a>
+    </div>
   </div>
 </div>
