@@ -17,7 +17,7 @@
 <div>
   <h1>Sign up</h1>
   <div role="alert" ng-show="loginError">{{ errorMessage }}</div>
-  <form class="form-horizontal col-xs-offset-4 col-xs-4" ng-submit="signup(signupForm.$valid)">
+  <form class="form-horizontal col-xs-offset-4 col-xs-4" name="signupForm" ng-submit="signup(signupForm.$valid)">
     <div class="form-group">
       <input type="text" class="form-control initial-form" placeholder="username" ng-model="user.username" required />
       <input type="password" class="form-control initial-form" placeholder="password" ng-model="user.password" required />
