@@ -1,11 +1,13 @@
 # Thunder Routes
 
 > For lightning-fast road trip decisions
+> thunderroutes.herokuapp.com
 
 
 ## Table of Contents
 
 1. [Usage](#Usage)
+1. [Tech Stack](#tech-stack)
 1. [Requirements](#requirements)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
@@ -14,16 +16,18 @@
 
 ## Usage
 
-> When you planning a trip
+> Find and save stops for your next road trip!  Enter a start and end point along with a number of stops, and Thunder Routes does the rest for you, eliminating the decision making progress and finding you a few spots to get out of the car.
+
+## Tech Stack
+- MongoDB with Mongoose
+- Node
+- Express
+- Angular
 
 ## Requirements
 
-- Fill out later.x
 - Node 5.8.x
 - MongoDB 3.2.x
-
-## Development
-- Fill out later.x
 
 ### Installing Dependencies
 All front-end dependencies are loaded in via CDN.
