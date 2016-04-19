@@ -12,6 +12,7 @@ angular.module('roadtrippin.authFactory', [])
     })
     .catch(function(error) {
       console.log('ERROR: ', error);
+      return { error: error.data.error };
     });
   };
   
@@ -26,6 +27,7 @@ angular.module('roadtrippin.authFactory', [])
     })
     .catch(function(error) {
       console.log('ERROR: ', error);
+      return { error: error.data.error };
     });
   };
   

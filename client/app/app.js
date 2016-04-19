@@ -52,8 +52,5 @@ angular.module('roadtrippin', [
     } else if (toState && toState.authenticate && authFactory.isAuth()) {
       $location.url('/homepage');
     }
-    // } else if (toState.url === '/signin' || toState.url === '/signup') {
-    //   $location.url('/homepage');
-    // }
   });
 });
