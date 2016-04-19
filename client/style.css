@@ -82,6 +82,15 @@ form * {
   margin-right: 10px;
 }
 
+.btn a {
+  color: #333;
+}
+
+.btn a:hover {
+  text-decoration: none;
+  color: #333;
+}
+
 .btn:hover {
   cursor: pointer;
   background-color: #F2932E;
