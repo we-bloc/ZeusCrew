@@ -13,17 +13,17 @@ angular.module('roadtrippin', [
   $stateProvider
     .state('signin', {
       url: '/signin',
-      templateUrl: './../auth/signin.html',
+      templateUrl: './../app/auth/signin.html',
       controller: 'authController'
     })
     .state('signup', {
       url: '/signup',
-      templateUrl: './../auth/signup.html',
+      templateUrl: './../app/auth/signup.html',
       controller: 'authController'
     })
     .state('homepage', {
       url: '/homepage',
-      templateUrl: './../auth/homepage.html',
+      templateUrl: './../app/map/homepage.html',
       controller: 'mapController',
       authenticate: true
     });
