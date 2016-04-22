@@ -24,9 +24,29 @@
   <script src="app/auth/authCtrl.js"></script>
   <script src="app/auth/authFactory.js"></script>
   <script src="app/app.js"></script>
+  <script src="app/dashboard/dashboardCtrl.js"></script>
+  <script src="app/dashboard/profile/profileCtrl.js"></script>
+  <script src="app/dashboard/trips/tripsCtrl.js"></script>
   <script src="app/map/geoService.js"></script>
 </head>
-<body ng-app="roadtrippin">
+<body ng-app="roadtrippin" ng-controller="mainController">
+  <!-- Header -->
+  <header class="col-xs-12" id="funcNav">
+    <a id="#top"></a>
+    <div class="dropdown col-xs-offset-10 col-xs-2">
+      <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <span class="acct">Account</span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
+        <li><a href="#/dashboard" id="dashboard">Dashboard</a></li>
+        <!-- profile -->
+        <!-- requests -->
+      </ul>
+    </div>
+    <h1 class="title col-xs-10">Thunder Routes</h1>
+  </header>
 <div class="spacer"></div>
 
   <div ui-view></div>

@@ -4,8 +4,16 @@ angular.module('roadtrippin', [
   'gservice',
   'roadtrippin.auth',
   'roadtrippin.authFactory',
-  'ui.router'
+  'ui.router', 
+  'dashboard.profile',
+  'dashboard.trips',
+  'dashboard'
 ])
+.controller('mainController', ['$scope','mapFactory', function($scope,mapFactory){
+  $scope.signout = function () {
+    mapFactory.signout();
+  };
+}])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/homepage');
@@ -26,6 +34,28 @@ angular.module('roadtrippin', [
       templateUrl: './../app/map/homepage.html',
       controller: 'mapController',
       authenticate: true
+    })
+    .state('dashboard', {
+      url:'/dashboard',
+      views: {
+        '': { 
+          templateUrl: './../app/dashboard/dashboard.html',
+          controller: 'dashboardController' 
+        },
+        'profile@dashboard': {
+          templateUrl: './../app/dashboard/profile/profile.html',
+          controller: 'profileController'
+        },
+        // 'requests@dashboard': {
+        //   templateUrl: './../app/dashboard/requests/requests.html',
+        //   controller: 'requestsController'
+        // },
+        'trips@dashboard': {
+          templateUrl: './../app/dashboard/trips/trips.html',
+          controller: 'tripsController'
+        }
+        // NEED TO ADD createProject
+      }
     });
 
   $httpProvider.interceptors.push('AttachTokens');
