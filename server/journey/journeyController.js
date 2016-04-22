@@ -48,5 +48,21 @@ module.exports = {
       .catch(function(error) {
         next(error);
       });
+  },
+
+  // Get all of the trips belonging to the signed in user
+  getTrips: function (req, res, next) {
+    // Grab user token, get the users ID
+    var token = req.headers['x-access-token'];
+    var user = jwt.decode(token, 'route66');
+
+    // Find the users journeys
+    Journey.find({ userID: user._id })
+      .then(function (data) {
+        res.status(200).send(data);
+      })
+      .catch(function (error) {
+        next(error);
+      });
   }
 };

@@ -21,6 +21,8 @@ db.once('open', function() {
   console.log('Mongoose is connected');
 });
   
+// Grab only the logged in users trips
+app.get('/myTrips', journeyController.getTrips);
 
 app.post('/saveJourney', journeyController.saveJourney);
 app.get('/saveJourney', journeyController.getAll);
