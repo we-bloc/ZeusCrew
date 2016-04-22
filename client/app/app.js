@@ -7,7 +7,10 @@ angular.module('roadtrippin', [
   'ui.router', 
   'dashboard.profile',
   'dashboard.trips',
-  'dashboard'
+  'dashboard',
+  'ngAria',
+  'ngMaterial',
+  'ngAnimate'
 ])
 .controller('mainController', ['$scope','mapFactory', function($scope,mapFactory){
   $scope.signout = function () {
