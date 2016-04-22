@@ -14,8 +14,12 @@ var JourneySchema = new mongoose.Schema({
   },
   hash: {
     type: String
+  },
+  userID: {
+    type: String,
+    required: true
   }
-});
+}, {timestamps: true});
 
 var createSha = function (points) {
   var shasum = crypto.createHash('sha1');
