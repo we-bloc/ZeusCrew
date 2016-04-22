@@ -98,7 +98,4 @@ angular.module('roadtrippin.maps', ['gservice'])
 
     $scope.getAll();
 
-    $scope.signout = function () {
-      mapFactory.signout();
-    };
   });
