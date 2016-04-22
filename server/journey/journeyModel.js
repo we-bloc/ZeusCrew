@@ -14,6 +14,10 @@ var JourneySchema = new mongoose.Schema({
   },
   hash: {
     type: String
+  },
+  userID: {
+    type: String,
+    required: true
   }
 });
 
@@ -27,6 +31,7 @@ JourneySchema.pre('save', function(next) {
   var journey = this;
   var hash = createSha(journey.wayPoints.length.toString() + journey.startPoint + journey.endPoint);
   journey.hash = hash;
+  console.log(journey);
   next();
 });
 
