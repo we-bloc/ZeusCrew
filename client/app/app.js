@@ -6,8 +6,14 @@ angular.module('roadtrippin', [
   'roadtrippin.authFactory',
   'ui.router', 
   'dashboard.profile',
-  'dashboard.trips'
+  'dashboard.trips',
+  'dashboard'
 ])
+.controller('mainController', ['$scope','mapFactory', function($scope,mapFactory){
+  $scope.signout = function () {
+    mapFactory.signout();
+  };
+}])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/homepage');
@@ -33,7 +39,8 @@ angular.module('roadtrippin', [
       url:'/dashboard',
       views: {
         '': { 
-          templateUrl: './../app/dashboard/dashboard.html' 
+          templateUrl: './../app/dashboard/dashboard.html',
+          controller: 'dashboardController' 
         },
         'profile@dashboard': {
           templateUrl: './../app/dashboard/profile/profile.html',
