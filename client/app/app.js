@@ -26,6 +26,27 @@ angular.module('roadtrippin', [
       templateUrl: './../app/map/homepage.html',
       controller: 'mapController',
       authenticate: true
+    })
+    .state('dashboard'. {
+      url:'/dashboard',
+      views: {
+        '': { 
+          templateUrl: './../app/dashboard/dashboard.html' 
+        },
+        'profile@dashboard': {
+          templateUrl: './../app/dashboard/profile/profile.html',
+          controller: 'profileController'
+        },
+        'requests@dashboard': {
+          templateUrl: './../app/dashboard/requests/requests.html',
+          controller: 'requestsController'
+        },
+        'trips@dashboard': {
+          templateUrl: './../app/dashboard/trips/trips.html',
+          controller: 'tripsController'
+        }
+        // NEED TO ADD createProject
+      };
     });
 
   $httpProvider.interceptors.push('AttachTokens');
