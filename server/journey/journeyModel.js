@@ -19,7 +19,7 @@ var JourneySchema = new mongoose.Schema({
     type: String,
     required: true
   }
-});
+}, {timestamps: true});
 
 var createSha = function (points) {
   var shasum = crypto.createHash('sha1');
@@ -31,7 +31,6 @@ JourneySchema.pre('save', function(next) {
   var journey = this;
   var hash = createSha(journey.wayPoints.length.toString() + journey.startPoint + journey.endPoint);
   journey.hash = hash;
-  console.log(journey);
   next();
 });
 
