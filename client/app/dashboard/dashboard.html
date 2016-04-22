@@ -6,9 +6,29 @@
     <div ui-view="profile"></div>
   </div>
 
-  <div class="col-sm-8">
-    <input type="text">
-    <button></button>
+  <div class="col-sm-4" layout="column" ng-cloak>
+    <md-content class="md-padding">
+    <form ng-submit="$event.preventDefault()" name="searchForm">
+      <p>This is where you search for a friend</p>
+      <div layout-gt-sm="row">
+      <md-autocomplete flex required
+          md-input-name="autocompleteField"
+          md-input-minlength="2"
+          md-no-cache="ctrl.noCache"
+          md-selected-item="ctrl.selectedUser"
+          md-search-text="ctrl.searchText"
+          md-items="user in ctrl.querySearch(ctrl.searchText)"
+          md-item-text="user.name"
+          md-floating-label="Friend Name">
+        <md-item-template>
+          <span md-highlight-text="ctrl.searchText">{{user.name}}</span>
+        </md-item-template>
+        <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+          <div ng-message="minlength">Your entry is not long enough.</div>
+      </md-autocomplete>
+      </div>
+    </form>
+    </md-content>
   </div>
 
   <!-- Create Project -->
