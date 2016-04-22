@@ -43,7 +43,8 @@ angular.module('roadtrippin', [
       views: {
         '': { 
           templateUrl: './../app/dashboard/dashboard.html',
-          controller: 'dashboardController' 
+          controller: 'dashboardController',
+          controllerAs: 'ctrl' 
         },
         'profile@dashboard': {
           templateUrl: './../app/dashboard/profile/profile.html',
