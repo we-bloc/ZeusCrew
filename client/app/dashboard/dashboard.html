@@ -8,7 +8,7 @@
 
   <div class="col-sm-4" layout="column" ng-cloak>
     <md-content class="md-padding">
-    <form ng-submit="$event.preventDefault()" name="searchForm">
+    <form ng-submit="ctrl.testFunc()" name="searchForm">
       <div layout-gt-sm="row">
       <md-autocomplete flex required
           md-input-name="autocompleteField"
