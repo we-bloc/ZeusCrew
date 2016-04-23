@@ -4,18 +4,14 @@ var bcrypt = require('bcrypt-nodejs');
 var SALT_WORK_FACTOR = 10;
 
 var UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  
-  password: {
-    type: String,
-    required: true
-  },
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  firstname: { type: String, required: true },
+  lastname: { type: String, required: false },
+  friends: { type: Array, required: false } ,
+  pending: { type: Array, required: false },
   salt: String
-});
+}, { timestamps: true });
 
 UserSchema.methods.comparePasswords = function(attemptedPassword) {
   var savedPassword = this.password;
@@ -55,7 +51,7 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-module.exports = mongoose.model('users', UserSchema);
-// var User = mongoose.model('User', UserSchema);
+//module.exports = mongoose.model('users', UserSchema);
+ var User = mongoose.model('User', UserSchema);
 
-// module.exports = User;
+module.exports = User;
