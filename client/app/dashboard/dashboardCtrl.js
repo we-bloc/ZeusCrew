@@ -47,9 +47,17 @@ function dashboardController ($timeout, $q) {
   self.selectedUser = null;
   self.searchText = null;
   self.querySearch = querySearch;
+  self.showSuccessAlert = false;
 
   self.testFunc = function() {
     console.log(self.selectedUser);
+    self.selectedUser = null;
+    self.searchText = null;
+    self.showSuccess();
+  };
+
+  self.showSuccess = function () {
+    self.showSuccessAlert = !self.showSuccessAlert;
   };
 
   //These are the functions that send the friend request
