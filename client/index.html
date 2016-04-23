@@ -10,12 +10,15 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
   <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+
   <!-- External resources -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8eyEhSTTMt_k-thJXEtcmMwhesb9tH2Q&libraries=places"></script>
   <script   src="https://code.jquery.com/jquery-1.12.3.js"   integrity="sha256-1XMpEtA4eKXNNpXcJ1pmMPs8JV+nwLdEqwiJeCQEkyc="   crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+  
 
   <!-- Our resources -->
   <script src="app/map/geoService.js"></script>
@@ -30,6 +33,16 @@
   <script src="app/map/geoService.js"></script>
 </head>
 <body ng-app="roadtrippin" ng-controller="mainController">
+
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+
   <!-- Header -->
   <header class="col-xs-12" id="funcNav">
     <a id="#top"></a>
@@ -41,7 +54,6 @@
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
         <li><a href="#/dashboard" id="dashboard">Dashboard</a></li>
-        <!-- profile -->
         <!-- requests -->
       </ul>
     </div>
@@ -50,5 +62,6 @@
 <div class="spacer"></div>
 
   <div ui-view></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
 </body>
 </html>

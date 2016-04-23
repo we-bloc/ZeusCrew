@@ -6,10 +6,33 @@
     <div ui-view="profile"></div>
   </div>
 
-  <div class="col-sm-8">
-    <input type="text">
-    <button></button>
+  <div class="col-sm-4" layout="column" ng-cloak>
+    <md-content class="md-padding">
+    <form ng-submit="ctrl.testFunc()" name="searchForm">
+      <div layout-gt-sm="row">
+      <md-autocomplete flex
+          md-input-name="autocompleteField"
+          md-no-cache="ctrl.noCache"
+          md-selected-item="ctrl.selectedUser"
+          md-search-text="ctrl.searchText"
+          md-items="user in ctrl.querySearch(ctrl.searchText)"
+          md-item-text="user.userName"
+          md-floating-label="Add a Friend">
+        <md-item-template>
+          <span md-highlight-text="ctrl.searchText">{{user.firstName}} {{user.lastName}}</span>
+        </md-item-template>
+<!--         <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+          <div ng-message="minlength">Enter more letters to seach for a name!</div>
+          <div ng-message="maxlength">Your entry is too long.</div> -->
+      </md-autocomplete>
+      </div>
+    </form>
+    </md-content>
+    <div class="alert alert-success" ng-show="ctrl.showSuccessAlert">
+      <button type="button" class="close" data-ng-click="ctrl.showSuccess()">×</button> <strong>Friend Successfully Requested!</strong> {{successTextAlert}}</div>
+    </div>
   </div>
+  
 
   <!-- Create Project -->
 <!--   <div class="col-sm-6">
