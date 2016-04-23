@@ -26,8 +26,10 @@ app.post('/saveJourney', journeyController.saveJourney);
 app.get('/saveJourney', journeyController.getAll);
 app.post('/signin', userController.signin);
 app.post('/signup', userController.signup);
+app.put('/newRequest', userController.sendFriendRequest);
+app.put('/reqResponse', userController.handleFriendRequest);
+app.get('/myUsers', userController.sendNonFriendUsers);
 app.use(userController.errorHandler);
-
 
 var port = process.env.PORT || 8080;
 
