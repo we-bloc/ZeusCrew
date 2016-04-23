@@ -10,9 +10,8 @@
     <md-content class="md-padding">
     <form ng-submit="ctrl.testFunc()" name="searchForm">
       <div layout-gt-sm="row">
-      <md-autocomplete flex required
+      <md-autocomplete flex
           md-input-name="autocompleteField"
-          md-input-minlength="2"
           md-no-cache="ctrl.noCache"
           md-selected-item="ctrl.selectedUser"
           md-search-text="ctrl.searchText"
@@ -22,13 +21,18 @@
         <md-item-template>
           <span md-highlight-text="ctrl.searchText">{{user.firstName}} {{user.lastName}}</span>
         </md-item-template>
-        <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
+<!--         <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
           <div ng-message="minlength">Enter more letters to seach for a name!</div>
+          <div ng-message="maxlength">Your entry is too long.</div> -->
       </md-autocomplete>
       </div>
     </form>
     </md-content>
+    <div class="alert alert-success" ng-show="ctrl.showSuccessAlert">
+      <button type="button" class="close" data-ng-click="ctrl.showSuccess()">×</button> <strong>Friend Successfully Requested!</strong> {{successTextAlert}}</div>
+    </div>
   </div>
+  
 
   <!-- Create Project -->
 <!--   <div class="col-sm-6">
