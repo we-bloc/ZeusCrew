@@ -5,6 +5,7 @@ function dashboardController ($timeout, $q) {
   var self = this;
   // This populates with all non-friended users
   // self.users = getUsers();
+
   self.users = [
   {
     firstName:'Mark',
@@ -46,6 +47,28 @@ function dashboardController ($timeout, $q) {
   self.selectedUser = null;
   self.searchText = null;
   self.querySearch = querySearch;
+
+  self.testFunc = function() {
+    console.log(self.selectedUser);
+  };
+
+  //These are the functions that send the friend request
+
+  /*self.sendRequest = sendRequest;
+
+  function sendRequest (userObj) {
+    var deferred = $q.defer();
+      $http({
+        method: 'PUT',
+        url: '/newRequest',
+        data: userObj
+      }).then(function (res) {
+        deferred.resolve (res.data);
+      }).catch(function (err) {
+        deferred.reject (err);
+      });
+      return deferred.promise;
+  };*/
 
   // search the current searchText for a matching list of users
   function querySearch (query) {
