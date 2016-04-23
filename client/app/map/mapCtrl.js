@@ -36,6 +36,7 @@ angular.module('roadtrippin.maps', ['gservice'])
     };
 
     var splitLocations = function (places) {
+      console.log(places);
       $scope.places = [];
       //copy the places array before we start splitting things so our original stays in-tact
       var placesCopy = [];

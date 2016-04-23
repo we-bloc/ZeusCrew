@@ -179,7 +179,16 @@ h3 {
 .dont-show {
   visibility: hidden;
 }
+
 .badge {
   margin-left: 5px;
   background: red;
 }
+
+.nickName {
+  font: 1.5em "Fugaz One";
+  color: #003136;
+  text-align: left;
+  margin-bottom: 0px;
+}
+
