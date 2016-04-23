@@ -1,12 +1,25 @@
 angular.module('dashboard', ['ngMaterial'])
-  .controller('dashboardController', dashboardController);
+  .controller('dashboardController', dashboardCtrl)
+  .factory('dashboardFactory', function($http) {
+    var getNotifications = function(){
+      //HTTP request to get users notifications
+      //Promise
+      return $http({
+        method: 'GET',
+        url: '/myNotifications'
+      })
+    };
+    return {
+      getNotifications: getNotifications
+    };
+  });
 
-function dashboardController ($timeout, $q) {
+function dashboardCtrl ($timeout, $q, $http) {
   var self = this;
   // This populates with all non-friended users
-  // self.users = getUsers();
+  self.users = getUsers();
 
-  self.users = [
+  /*self.users = [
   {
     firstName:'Mark',
     lastName: 'Keith',
@@ -42,7 +55,7 @@ function dashboardController ($timeout, $q) {
     lastName: 'Pace',
     email: 'wonderful.man@gmail.com',
     userName: 'knowsAllTheThings'
-  }]
+  }]*/
 
   self.selectedUser = null;
   self.searchText = null;
@@ -62,7 +75,7 @@ function dashboardController ($timeout, $q) {
 
   //These are the functions that send the friend request
 
-  /*self.sendRequest = sendRequest;
+  self.sendRequest = sendRequest;
 
   function sendRequest (userObj) {
     var deferred = $q.defer();
@@ -76,7 +89,7 @@ function dashboardController ($timeout, $q) {
         deferred.reject (err);
       });
       return deferred.promise;
-  };*/
+  };
 
   // search the current searchText for a matching list of users
   function querySearch (query) {
@@ -87,7 +100,7 @@ function dashboardController ($timeout, $q) {
   };
 
   // http request to server... will return all non-friended users
-/*  function getUsers () {
+  function getUsers () {
     var deferred = $q.defer();
       $http({
         method: 'GET',
@@ -98,7 +111,7 @@ function dashboardController ($timeout, $q) {
         deferred.reject (err);
       });
       return deferred.promise;
-  };*/
+  };
 
   // creates a filter function for a query string
   function createFilterFor (query) {
