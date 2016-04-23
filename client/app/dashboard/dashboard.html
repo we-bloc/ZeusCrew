@@ -9,7 +9,6 @@
   <div class="col-sm-4" layout="column" ng-cloak>
     <md-content class="md-padding">
     <form ng-submit="$event.preventDefault()" name="searchForm">
-      <p>This is where you search for a friend</p>
       <div layout-gt-sm="row">
       <md-autocomplete flex required
           md-input-name="autocompleteField"
@@ -18,13 +17,13 @@
           md-selected-item="ctrl.selectedUser"
           md-search-text="ctrl.searchText"
           md-items="user in ctrl.querySearch(ctrl.searchText)"
-          md-item-text="user.name"
-          md-floating-label="Friend Name">
+          md-item-text="user.userName"
+          md-floating-label="Add a Friend">
         <md-item-template>
-          <span md-highlight-text="ctrl.searchText">{{user.name}}</span>
+          <span md-highlight-text="ctrl.searchText">{{user.firstName}} {{user.lastName}}</span>
         </md-item-template>
         <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
-          <div ng-message="minlength">Your entry is not long enough.</div>
+          <div ng-message="minlength">Enter more letters to seach for a name!</div>
       </md-autocomplete>
       </div>
     </form>
