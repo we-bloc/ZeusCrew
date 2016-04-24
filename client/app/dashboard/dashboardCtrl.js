@@ -18,13 +18,11 @@ angular.module('dashboard', ['ngMaterial'])
       });
     };
     var sendRequest = function (userObj) {
-      $http({
+      return $http({
         method: 'PUT',
         url: '/newRequest',
         data: userObj
-      }).then(function(){
-        console.log(userObj);
-      })
+      });
   };
 
     return {
@@ -40,7 +38,6 @@ function dashboardCtrl ($timeout, $q, $http, dashboardFactory) {
   self.users; 
 
   dashboardFactory.getUsers().then(function(users){
-    console.log(users.data);
     self.users = users.data;
   });
 
@@ -56,7 +53,7 @@ function dashboardCtrl ($timeout, $q, $http, dashboardFactory) {
 
   //These are the functions that send the friend request
   self.sendRequest = function() {
-    dashboardFactory.sendRequest(self.selectedUser);
+    dashboardFactory.sendRequest(self.selectedUser).then(self.showSuccess);
   };
 
 
