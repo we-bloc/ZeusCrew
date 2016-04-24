@@ -41,11 +41,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
-
-  <!-- Angular Material Library -->
-  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-
-
+  
   <!-- Header -->
   <header class="col-xs-12" id="funcNav">
     <a id="#top"></a>
@@ -58,7 +54,7 @@
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
         <li><a href="#/dashboard" id="dashboard">Dashboard</a></li>
-        <li ng-if="notifications.length > 0"><a ng-click="testFunc()" id="dashboard">Alerts<span class="badge">{{notifications.length}}</span></a></li>
+        <li ng-if="notifications.length > 0"><a ng-click="showNotifications($event)" id="dashboard">Alerts<span class="badge">{{notifications.length}}</span></a></li>
       </ul>
     </div>
     <h1 class="title col-xs-10">Thunder Routes</h1>
@@ -66,6 +62,7 @@
 <div class="spacer"></div>
 
   <div ui-view></div>
-  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
+   <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 </body>
 </html>
