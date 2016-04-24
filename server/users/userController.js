@@ -77,10 +77,16 @@ module.exports = {
     var friendID = req.body._id; 
     findUserById(friendID)
       .then(function (friendToBe) {
-        if(friendToBe) { 
-          friendToBe.pending.push(userID);
+        var pending = friendToBe.pending; 
+        var contains = pending.find(function(req) {
+          return req._id === userID;
+        });
+        if(!contains) {
+          friendToBe.pending.push(user);
           friendToBe.save();
-          res.send({sucess: "Friend Request Sent" });
+          res.send({sucess: "Friend Request Sent" });  
+        } else {
+          res.send({failure: "You've already requested this friend!"});
         }
       });
   },
