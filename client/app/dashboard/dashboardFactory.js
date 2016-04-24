@@ -1,8 +1,6 @@
 angular.module('dashboard.factory', [])
   .factory('dashboardFactory', function($http, $q) {
     var getNotifications = function(){
-      //HTTP request to get users notifications
-      //Promise
       return $http({
         method: 'GET',
         url: '/myNotifications'
@@ -10,7 +8,6 @@ angular.module('dashboard.factory', [])
     };
 
     var getUsers = function() {
-      console.log('Is this running?')
       return $http({
         method: 'GET',
         url: '/myUsers'

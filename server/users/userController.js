@@ -131,6 +131,15 @@ module.exports = {
     }
   },
 
+  getNotifications: function(req, res) {
+    var token = req.headers['x-access-token'];
+    var user = jwt.decode(token, 'route66');
+    findUser({username: user.username})
+      .then(function(user) {
+        res.status(200).send(user.pending);
+      });
+  },
+
   errorHandler: function (error, req, res, next) {
     res.status(500).send({error: error.message});
   }

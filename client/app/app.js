@@ -61,13 +61,15 @@ angular.module('roadtrippin', [
   $httpProvider.interceptors.push('AttachTokens');
 })
 .controller('mainController', ['$scope','mapFactory', 'dashboardFactory', function($scope,mapFactory,dashboardFactory){
-  $scope.notifications = [1,2,3,4,5];
+  $scope.notifications;
   $scope.signout = function () {
+    $scope.notifications = [];
     mapFactory.signout();
   };
   $scope.getNotifications = function() {
-    dashboardFactory.getNotifications().then(function(data){
-      $scope.notifications = data;
+    dashboardFactory.getNotifications().then(function(pending){
+      console.log(pending);
+      $scope.notifications = pending.data;
     });
   };
   $scope.getNotifications();
