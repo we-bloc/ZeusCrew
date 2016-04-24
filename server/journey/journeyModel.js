@@ -25,6 +25,9 @@ var JourneySchema = new mongoose.Schema({
   },
   comments: {
     type: [{user: String, text: String}]
+  },
+  nickName: {
+    type: String
   }
 }, {timestamps: true});
 

@@ -1,5 +1,6 @@
 angular.module('roadtrippin.maps', ['gservice'])
   .controller('mapController', function($scope, mapFactory, gservice, $location, $anchorScroll) {
+    $scope.trip = {};
     $scope.route = {};
     $scope.route.stopOptions = [1, 2, 3, 4, 5];
     $scope.places = [];
@@ -26,6 +27,10 @@ angular.module('roadtrippin.maps', ['gservice'])
       $scope.route.end = endAutoComplete.getPlace().formatted_address;
       $(this).val('') ;   
     });
+
+    $scope.formatDate = function(date) {
+      return moment(date).fromNow();
+    };
 
     //this is a call to our Google maps API factory for directions
     $scope.getRoute = function() {
@@ -55,11 +60,13 @@ angular.module('roadtrippin.maps', ['gservice'])
     };
 
     $scope.saveRoute = function () {
+      gservice.thisTrip.nickname = $scope.trip.name;
       mapFactory.saveJourneyWithWaypoints(gservice.thisTrip).then($scope.getAll());
     };
 
     $scope.getAll = function () {
       mapFactory.getAllRoutes().then(function (results) {
+        console.log(results);
         $scope.savedRoutes = results;
       });
     };
@@ -95,6 +102,12 @@ angular.module('roadtrippin.maps', ['gservice'])
           .then(function (places) { splitLocations(places); });
         }
       }
+    };
+
+    $scope.showNameForm = false;
+
+    $scope.showForm = function() {
+      $scope.showNameForm = !$scope.showNameForm;
     };
 
     $scope.getAll();

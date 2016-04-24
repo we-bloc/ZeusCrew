@@ -9,6 +9,7 @@ module.exports = {
   saveJourney: function (req, res, next) {
     var start = req.body.start;
     var end = req.body.end;
+    var nickname = req.body.nickname;
     var waypoints = [];
 
     // Grab user token, get the users ID
@@ -25,11 +26,13 @@ module.exports = {
     findJourney({wayPoints: waypoints})
       .then(function (waypoint) {
         if (!waypoint) {
+          console.log('here');
           return createJourney({
             startPoint: start,
             endPoint: end,
             wayPoints: waypoints,
-            userID: user._id
+            userID: user._id,
+            nickName: nickname
           });
         } else {
           next(new Error('Journey already exist!'));
