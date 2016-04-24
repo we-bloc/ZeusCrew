@@ -60,6 +60,7 @@ angular.module('roadtrippin', [
 
   $httpProvider.interceptors.push('AttachTokens');
 })
+
 .controller('mainController', ['$scope','mapFactory', 'dashboardFactory', '$mdDialog', '$mdMedia', function($scope,mapFactory,dashboardFactory,$mdDialog, $mdMedia){
   $scope.notifications;
   $scope.signout = function () {
