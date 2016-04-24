@@ -18,6 +18,16 @@ var JourneySchema = new mongoose.Schema({
   userID: {
     type: String,
     required: true
+  },
+  likes: {
+    type: Number,
+    default: 0
+  },
+  comments: {
+    type: [{user: String, text: String}]
+  },
+  nickName: {
+    type: String
   }
 }, {timestamps: true});
 

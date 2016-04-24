@@ -31,7 +31,12 @@
       <p class="stop-address">{{place.location[1]}}, {{place.location[2]}}</p>
       <p class="stop-address">{{place.location[3]}}</p>
     </div>
-    <button class="routeBtn btn btn-block" ng-click="saveRoute()">Save this route</button>
+    <form ng-submit="saveRoute()" ng-if="showNameForm">
+      <label for="nickname">Trip name: </label>
+      <input type="text" name="nickname" placeholder="Name your trip!" ng-model="trip.name">
+      <input type="submit" id="submit" value="Submit">
+    </form>
+    <button class="routeBtn btn btn-block" ng-click="showForm()">Save this route</button>
   </div>
 </div>
 
@@ -40,6 +45,8 @@
   <h3 class="infoHeader"><i class="fa fa-caret-right fa-rotate-90" aria-hidden="true"></i>Saved Routes</h3>
   <div class="row info save-routes" ng-repeat="route in savedRoutes">
     <div class="col-xs-4">
+    <!-- TODO: STYLE THIS -->
+      <p class="route-start">Nickname: {{ route.nickName }}  Created: {{ formatDate(route.createdAt) }}</p>
       <p class="route-start">From: {{ route.startPoint }}</p>
       <p class="route-end">To: {{ route.endPoint }}</p>
     </div>
