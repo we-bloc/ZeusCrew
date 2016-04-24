@@ -102,25 +102,14 @@ module.exports = {
     var user = jwt.decode(token, 'route66');
     var userID = user._id;
     var currentUser;
-    findUserById(userId)
-      .then(function (user) {
-        if(user) {
-          currentUser = user;
-        }
-      });
-
-    findUsers({})
-      .then(function (users) {
-        var nonFriendUsers;
-        if(users) {
-          nonFriendUsers =  users.filter(function (user) {
-            if(!currentUser.friends.includes(user)) {
-              return user;
-            }
-          });
-          res.send(nonFriendUsers);
-        }
-      });
+    findUser({_id:userID}).then(function(user) {
+      currentUser = user;
+      findUsers({_id:{ $nin: currentUser.friends }})
+        .then(function (users) {
+          console.log(users);
+          res.send(users);
+        });
+    });
   },
   checkAuth: function(req, res, next) {
     var token = req.headers['x-access-token'];

@@ -12,11 +12,6 @@ angular.module('roadtrippin', [
   'ngMaterial',
   'ngAnimate'
 ])
-.controller('mainController', ['$scope','mapFactory', function($scope,mapFactory){
-  $scope.signout = function () {
-    mapFactory.signout();
-  };
-}])
 
 .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
   $urlRouterProvider.otherwise('/homepage');
@@ -64,6 +59,18 @@ angular.module('roadtrippin', [
 
   $httpProvider.interceptors.push('AttachTokens');
 })
+.controller('mainController', ['$scope','mapFactory', 'dashboardFactory', function($scope,mapFactory,dashboardFactory){
+  $scope.notifications = [1,2,3,4,5];
+  $scope.signout = function () {
+    mapFactory.signout();
+  };
+  $scope.getNotifications = function() {
+    dashboardFactory.getNotifications().then(function(data){
+      $scope.notifications = data;
+    });
+  };
+  $scope.getNotifications();
+}])
 
 .factory('AttachTokens', function ($window) {
   var attach = {

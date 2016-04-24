@@ -8,7 +8,7 @@
 
   <div class="col-sm-4" layout="column" ng-cloak>
     <md-content class="md-padding">
-    <form ng-submit="ctrl.testFunc()" name="searchForm">
+    <form ng-submit="ctrl.sendRequest()" name="searchForm">
       <div layout-gt-sm="row">
       <md-autocomplete flex
           md-input-name="autocompleteField"
@@ -16,10 +16,10 @@
           md-selected-item="ctrl.selectedUser"
           md-search-text="ctrl.searchText"
           md-items="user in ctrl.querySearch(ctrl.searchText)"
-          md-item-text="user.userName"
+          md-item-text="user.username"
           md-floating-label="Add a Friend">
         <md-item-template>
-          <span md-highlight-text="ctrl.searchText">{{user.firstName}} {{user.lastName}}</span>
+          <span md-highlight-text="ctrl.searchText">{{user.firstname}} {{user.lastname}}</span>
         </md-item-template>
 <!--         <div ng-messages="searchForm.autocompleteField.$error" ng-if="searchForm.autocompleteField.$touched">
           <div ng-message="minlength">Enter more letters to seach for a name!</div>

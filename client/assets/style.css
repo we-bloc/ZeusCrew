@@ -179,3 +179,7 @@ h3 {
 .dont-show {
   visibility: hidden;
 }
+.badge {
+  margin-left: 5px;
+  background: red;
+}
