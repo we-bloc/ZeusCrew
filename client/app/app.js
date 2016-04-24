@@ -69,17 +69,23 @@ angular.module('roadtrippin', [
   };
   $scope.getNotifications = function() {
     dashboardFactory.getNotifications().then(function(pending){
-      console.log(pending);
       $scope.notifications = pending.data;
     });
   };
   $scope.getNotifications();
 
-  function DialogController($scope, $mdDialog, notifs) {
+  $scope.reqResponse = function(bool) {
+    dashboardFactory.reqResponse(bool).then(function(stuff) {
+      $mdDialog.hide();
+    });
+  };
+
+  function DialogController($scope, $mdDialog, notifs,reqResponse) {
     $scope.notifs = notifs;
     $scope.closeDialog = function() {
       $mdDialog.hide();
     }
+    $scope.reqResponse = reqResponse;
   };
 
   $scope.showNotifications = function($event) {
@@ -92,7 +98,13 @@ angular.module('roadtrippin', [
            '  <md-dialog-content>'+
            '    <md-list>'+
            '      <md-list-item ng-repeat="item in notifs track by $index">'+
-           '       <p>Number {{item}}</p>' +
+           '       <p class="notification">New Friend Request from: {{item.firstname}} {{item.lastname}}</p>' +
+           '    <md-button ng-click="reqResponse( {accepted:true,_id:item._id })" class="md-primary">' +
+           '      Accept' +
+           '    </md-button>' +
+           '    <md-button ng-click="reqResponse({accepted:false,_id:item._id})" class="md-primary">' +
+           '      Decline' +
+           '    </md-button>' +
            '      '+
            '    </md-list-item></md-list>'+
            '  </md-dialog-content>' +
@@ -103,7 +115,8 @@ angular.module('roadtrippin', [
            '  </md-dialog-actions>' +
            '</md-dialog>',
       locals: {
-        notifs: $scope.notifications
+        notifs: $scope.notifications,
+        reqResponse: $scope.reqResponse
       },
       controller: DialogController
     })

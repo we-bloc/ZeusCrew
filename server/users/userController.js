@@ -92,31 +92,43 @@ module.exports = {
   },
   handleFriendRequest: function (req, res) {
     var token = req.headers['x-access-token'];
-    var user = jwt.decode(token, 'route66'); 
-    var accepted  = req.body.accepted;  
-    var friendID = req.body._id;
-    var currentUser; 
-    var userID = user._id; 
-    var friendToBe; 
-    findUserById(userID)
-      .then(function (user) { 
+    var responder = jwt.decode(token, 'route66');
+    var responderID = responder._id;
+    var requesterID = req.body._id;
+    var accepted = req.body.accepted;
+    findUserById(responderID)
+      .then(function (user) {
         if(user) {
-          currentUser = user;
-          var index = currentUser.pending.indexOf(friendID);
-          currentUser.pending.slice(index, 1);
-          currentUser.save();
+          var currentUser = user;
+          var pending = currentUser.pending; 
+          var index = function () {
+            for(var i = 0, len = pending.length; i < len; i++) {
+              console.log("IN LOOP", pending[i]._id === requesterID);
+              if (pending[i]._id === requesterID) return i;
+            }
+            return -1;
+          }();
+          if(index > -1) {
+            currentUser.pending.splice(index, 1);
+          }
+          currentUser.save(function(){
+            if(!accepted) res.send({message:"Request Handled!"})
+          })
+        }
+        if (accepted) {
+          findUserById(requesterID)
+            .then(function (user) {
+                friendToBe = user;
+                currentUser.friends.push(requesterID);
+                friendToBe.friends.push(responderID);
+                currentUser.save(function() {
+                  friendToBe.save(function(){
+                    res.send({message:"Request Handled!"})
+                  });          
+                });
+            });
         }
       });
-    if (accepted ===true) {
-      findUserById(friendID)
-        .then(function (user) {
-            friendToBe = user;
-            currentUser.friends.push(friendID);
-            friendToBe.friends.push(userID);
-            user.save();
-            friendToBe.save();
-        });
-    }
   },
   sendNonFriendUsers: function (req, res) {
     var token = req.headers['x-access-token'];
@@ -127,7 +139,6 @@ module.exports = {
       currentUser = user;
       findUsers({_id:{ $nin: currentUser.friends }})
         .then(function (users) {
-          console.log(users);
           res.send(users);
         });
     });
