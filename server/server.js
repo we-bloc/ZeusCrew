@@ -26,6 +26,7 @@ app.get('/myTrips', journeyController.getTrips);
 
 app.post('/saveJourney', journeyController.saveJourney);
 app.get('/saveJourney', journeyController.getAll);
+app.put('/messages', journeyController.addMsg);
 app.post('/signin', userController.signin);
 app.post('/signup', userController.signup);
 app.put('/newRequest', userController.sendFriendRequest);

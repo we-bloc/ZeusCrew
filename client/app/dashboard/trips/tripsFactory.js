@@ -15,7 +15,16 @@ angular.module('dashboard.tripsFactory', [])
       return deferred.promise;
     };
 
+    var addMessage = function(msgData) {
+      return $http({
+        method: 'PUT',
+        url: '/messages',
+        data: msgData
+      });
+    };
+
     return {
-      getMyTrips: getMyTrips
+      getMyTrips: getMyTrips,
+      addMessage: addMessage
     };
   });

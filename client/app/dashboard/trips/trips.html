@@ -5,6 +5,8 @@
       <h4 class="nickName">Wicked trip title</h4>
       <p class="route-start">From: {{ route.startPoint }}</p>
       <p class="route-end">To: {{ route.endPoint }}</p>
+      <a class="pull-left" href="Javascript:void(0)" ng-if="!route.showComments" ng-click="toggle(route)">Show comments</a>
+      <a class="pull-left" href="Javascript:void(0)" ng-if="route.showComments" ng-click="toggle(route)">Hide comments</a>
     </div>
     <div class="col-xs-4">
       <!-- <div class="stop-count">Number of stops: <br /> {{ route.wayPoints.length/2 }}</div> -->
@@ -12,6 +14,16 @@
     </div>
     <div class="col-xs-4 centered">
       <button class="saved-route-link btn" ng-click="viewSavedRoute(route.hash)">View this Route</button>
+      <span>Likes: {{route.likes}}</span>
+    </div>
+    <div class="row"></div>
+    <div class="comments col-xs-8" style="text-align: left" ng-if="route.showComments">
+      <div style="background-color: lightgrey" ng-repeat="comment in route.comments">
+        <p>{{comment.user}}:  {{comment.text}}</p>
+      </div>
+      <form ng-submit="sendComment(route)" class="pull-left">
+        <input ng-model="msg.text" type="text" placeholder="Add a comment">
+      </form>
     </div>
   </div>
 </div>

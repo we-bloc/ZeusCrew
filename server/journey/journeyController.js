@@ -64,5 +64,19 @@ module.exports = {
       .catch(function (error) {
         next(error);
       });
+  },
+
+  addMsg: function(req, res, next) {
+    var token = req.headers['x-access-token'];
+    var user = jwt.decode(token, 'route66');
+    // Set up the data to push into the project
+    var data = {user: user.username, text: req.body.text};
+
+    // Find the project and add the data to it
+    Journey.findById(req.body.pid).then(function(trip) {
+      trip.comments.push(data);
+      trip.save().then(function(newTrip) {console.log(trip)});
+    });
+    res.status(200).json(data);
   }
 };
