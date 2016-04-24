@@ -54,6 +54,21 @@ module.exports = {
         next(error);
       });
   },
+  purgeReqs: function(req, res) {
+    var username = req.body.username;
+    findUser({username: username})
+      .then(function(user){
+        var pending = user.pending;
+        var purged = pending.filter(function(item) {
+          return typeof item === 'object';
+        })
+        user.pending = purged;
+        user.save(function(err) {
+          if(err) res.send(err);
+          else res.send("PURGED! AND IT FEELS SO GOOD!", user);
+        });
+      });
+  },
   sendFriendRequest: function (req, res) {
     // Grab user token, get the users ID
     var token = req.headers['x-access-token'];
