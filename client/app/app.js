@@ -7,6 +7,7 @@ angular.module('roadtrippin', [
   'ui.router', 
   'dashboard.profile',
   'dashboard.trips',
+  'dashboard.factory',
   'dashboard',
   'ngAria',
   'ngMaterial',
