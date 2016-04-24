@@ -1,52 +1,25 @@
 angular.module('dashboard', ['ngMaterial'])
-  .controller('dashboardController', dashboardCtrl)
-  .factory('dashboardFactory', function($http, $q) {
-    var getNotifications = function(){
-      //HTTP request to get users notifications
-      //Promise
-      return $http({
-        method: 'GET',
-        url: '/myNotifications'
-      })
-    };
-
-    var getUsers = function() {
-      console.log('Is this running?')
-      return $http({
-        method: 'GET',
-        url: '/myUsers'
-      });
-    };
-    var sendRequest = function (userObj) {
-      return $http({
-        method: 'PUT',
-        url: '/newRequest',
-        data: userObj
-      });
-  };
-
-    return {
-      getNotifications: getNotifications,
-      getUsers: getUsers,
-      sendRequest: sendRequest
-    };
-  });
+  .controller('dashboardController', dashboardCtrl);
+  
 
 function dashboardCtrl ($timeout, $q, $http, dashboardFactory) {
   var self = this;
 
+  // Pulls all users who aren't currently friends of active user
   self.users; 
-
   dashboardFactory.getUsers().then(function(users){
     self.users = users.data;
   });
 
+  // This is the user that is selected from the dropdown
   self.selectedUser = null;
+  // This is the current search text. Updates on keyup
   self.searchText = null;
+  // This is the function call with searchText
   self.querySearch = querySearch;
   self.showSuccessAlert = false;
 
-
+  // This toggles the success alert
   self.showSuccess = function () {
     self.showSuccessAlert = !self.showSuccessAlert;
   };
@@ -64,8 +37,6 @@ function dashboardCtrl ($timeout, $q, $http, dashboardFactory) {
     $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
     return deferred.promise;
   };
-
-  // http request to server... will return all non-friended users
 
   // creates a filter function for a query string
   function createFilterFor (query) {

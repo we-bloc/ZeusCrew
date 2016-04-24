@@ -32,6 +32,9 @@
   <script src="app/dashboard/profile/profileCtrl.js"></script>
   <script src="app/dashboard/trips/tripsCtrl.js"></script>
   <script src="app/dashboard/trips/tripsFactory.js"></script>
+  <script src="app/dashboard/dashboardFactory.js"></script>
+  <script src="app/dashboard/trips/tripsFactory.js"></script>
+  <script src="app/dashboard/dashboardFactory.js"></script>
   <script src="app/map/geoService.js"></script>
 </head>
 <body ng-app="roadtrippin" ng-controller="mainController">
@@ -40,11 +43,7 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
-
-  <!-- Angular Material Library -->
-  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-
-
+  
   <!-- Header -->
   <header class="col-xs-12" id="funcNav">
     <a id="#top"></a>
@@ -52,12 +51,12 @@
       <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         <span class="acct ">Account</span>
         <span class="caret"></span>
-        <span class="badge">{{notifications.length}}</span>
+        <span ng-if="notifications.length > 0" class="badge">{{notifications.length}}</span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li><a href="#" id="signout" ng-click="signout()">Sign Out</a></li>
         <li><a href="#/dashboard" id="dashboard">Dashboard</a></li>
-        <li><a ng-click="testFunc()" id="dashboard">Alerts<span class="badge">{{notifications.length}}</span></a></li>
+        <li ng-if="notifications.length > 0"><a ng-click="showNotifications($event)" id="dashboard">Alerts<span class="badge">{{notifications.length}}</span></a></li>
       </ul>
     </div>
     <h1 class="title col-xs-10">Thunder Routes</h1>
@@ -65,6 +64,7 @@
 <div class="spacer"></div>
 
   <div ui-view></div>
-  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.7/angular-material.min.js"></script>
+   <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 </body>
 </html>

@@ -32,6 +32,8 @@ app.post('/signup', userController.signup);
 app.put('/newRequest', userController.sendFriendRequest);
 app.put('/reqResponse', userController.handleFriendRequest);
 app.get('/myUsers', userController.sendNonFriendUsers);
+app.get('/myNotifications', userController.getNotifications);
+app.put('/purgeReqs', userController.purgeReqs);
 app.use(userController.errorHandler);
 
 var port = process.env.PORT || 8080;

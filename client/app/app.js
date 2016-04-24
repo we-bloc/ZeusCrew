@@ -7,6 +7,7 @@ angular.module('roadtrippin', [
   'ui.router', 
   'dashboard.profile',
   'dashboard.trips',
+  'dashboard.factory',
   'dashboard',
   'ngAria',
   'ngMaterial',
@@ -59,17 +60,67 @@ angular.module('roadtrippin', [
 
   $httpProvider.interceptors.push('AttachTokens');
 })
-.controller('mainController', ['$scope','mapFactory', 'dashboardFactory', function($scope,mapFactory,dashboardFactory){
-  $scope.notifications = [1,2,3,4,5];
+
+.controller('mainController', ['$scope','mapFactory', 'dashboardFactory', '$mdDialog', '$mdMedia', function($scope,mapFactory,dashboardFactory,$mdDialog, $mdMedia){
+  $scope.notifications;
   $scope.signout = function () {
+    $scope.notifications = [];
     mapFactory.signout();
   };
   $scope.getNotifications = function() {
-    dashboardFactory.getNotifications().then(function(data){
-      $scope.notifications = data;
+    dashboardFactory.getNotifications().then(function(pending){
+      $scope.notifications = pending.data;
     });
   };
   $scope.getNotifications();
+
+  $scope.reqResponse = function(bool) {
+    dashboardFactory.reqResponse(bool).then(function(stuff) {
+      $mdDialog.hide();
+    });
+  };
+
+  function DialogController($scope, $mdDialog, notifs,reqResponse) {
+    $scope.notifs = notifs;
+    $scope.closeDialog = function() {
+      $mdDialog.hide();
+    }
+    $scope.reqResponse = reqResponse;
+  };
+
+  $scope.showNotifications = function($event) {
+    var parentEl = angular.element(document.body);
+    $mdDialog.show({
+      parent: parentEl,
+      targetEvent: $event,
+      template: 
+          '<md-dialog aria-label="List dialog">' +
+           '  <md-dialog-content>'+
+           '    <md-list>'+
+           '      <md-list-item ng-repeat="item in notifs track by $index">'+
+           '       <p class="notification">New Friend Request from: {{item.firstname}} {{item.lastname}}</p>' +
+           '    <md-button ng-click="reqResponse( {accepted:true,_id:item._id })" class="md-primary">' +
+           '      Accept' +
+           '    </md-button>' +
+           '    <md-button ng-click="reqResponse({accepted:false,_id:item._id})" class="md-primary">' +
+           '      Decline' +
+           '    </md-button>' +
+           '      '+
+           '    </md-list-item></md-list>'+
+           '  </md-dialog-content>' +
+           '  <md-dialog-actions>' +
+           '    <md-button ng-click="closeDialog()" class="md-primary">' +
+           '      Close Dialog' +
+           '    </md-button>' +
+           '  </md-dialog-actions>' +
+           '</md-dialog>',
+      locals: {
+        notifs: $scope.notifications,
+        reqResponse: $scope.reqResponse
+      },
+      controller: DialogController
+    })
+  }
 }])
 
 .factory('AttachTokens', function ($window) {

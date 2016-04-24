@@ -54,6 +54,21 @@ module.exports = {
         next(error);
       });
   },
+  purgeReqs: function(req, res) {
+    var username = req.body.username;
+    findUser({username: username})
+      .then(function(user){
+        var pending = user.pending;
+        var purged = pending.filter(function(item) {
+          return typeof item === 'object';
+        })
+        user.pending = purged;
+        user.save(function(err) {
+          if(err) res.send(err);
+          else res.send("PURGED! AND IT FEELS SO GOOD!", user);
+        });
+      });
+  },
   sendFriendRequest: function (req, res) {
     // Grab user token, get the users ID
     var token = req.headers['x-access-token'];
@@ -62,40 +77,58 @@ module.exports = {
     var friendID = req.body._id; 
     findUserById(friendID)
       .then(function (friendToBe) {
-        if(friendToBe) { 
-          friendToBe.pending.push(userID);
+        var pending = friendToBe.pending; 
+        var contains = pending.find(function(req) {
+          return req._id === userID;
+        });
+        if(!contains) {
+          friendToBe.pending.push(user);
           friendToBe.save();
-          res.send({sucess: "Friend Request Sent" });
+          res.send({sucess: "Friend Request Sent" });  
+        } else {
+          res.send({failure: "You've already requested this friend!"});
         }
       });
   },
   handleFriendRequest: function (req, res) {
     var token = req.headers['x-access-token'];
-    var user = jwt.decode(token, 'route66'); 
-    var accepted  = req.body.accepted;  
-    var friendID = req.body._id;
-    var currentUser; 
-    var userID = user._id; 
-    var friendToBe; 
-    findUserById(userID)
-      .then(function (user) { 
+    var responder = jwt.decode(token, 'route66');
+    var responderID = responder._id;
+    var requesterID = req.body._id;
+    var accepted = req.body.accepted;
+    findUserById(responderID)
+      .then(function (user) {
         if(user) {
-          currentUser = user;
-          var index = currentUser.pending.indexOf(friendID);
-          currentUser.pending.slice(index, 1);
-          currentUser.save();
+          var currentUser = user;
+          var pending = currentUser.pending; 
+          var index = function () {
+            for(var i = 0, len = pending.length; i < len; i++) {
+              console.log("IN LOOP", pending[i]._id === requesterID);
+              if (pending[i]._id === requesterID) return i;
+            }
+            return -1;
+          }();
+          if(index > -1) {
+            currentUser.pending.splice(index, 1);
+          }
+          currentUser.save(function(){
+            if(!accepted) res.send({message:"Request Handled!"})
+          })
+        }
+        if (accepted) {
+          findUserById(requesterID)
+            .then(function (user) {
+                friendToBe = user;
+                currentUser.friends.push(requesterID);
+                friendToBe.friends.push(responderID);
+                currentUser.save(function() {
+                  friendToBe.save(function(){
+                    res.send({message:"Request Handled!"})
+                  });          
+                });
+            });
         }
       });
-    if (accepted ===true) {
-      findUserById(friendID)
-        .then(function (user) {
-            friendToBe = user;
-            currentUser.friends.push(friendID);
-            friendToBe.friends.push(userID);
-            user.save();
-            friendToBe.save();
-        });
-    }
   },
   sendNonFriendUsers: function (req, res) {
     var token = req.headers['x-access-token'];
@@ -106,7 +139,6 @@ module.exports = {
       currentUser = user;
       findUsers({_id:{ $nin: currentUser.friends }})
         .then(function (users) {
-          console.log(users);
           res.send(users);
         });
     });
@@ -129,6 +161,15 @@ module.exports = {
           next(error);
         });
     }
+  },
+
+  getNotifications: function(req, res) {
+    var token = req.headers['x-access-token'];
+    var user = jwt.decode(token, 'route66');
+    findUser({username: user.username})
+      .then(function(user) {
+        res.status(200).send(user.pending);
+      });
   },
 
   errorHandler: function (error, req, res, next) {
