@@ -6,9 +6,9 @@
     <h5>{{data.profile.username}}</h5>
   </div>
   <div class="friends-list">
-    <h4>Friends <span>10</span></h4>
+    <h4>Friends <span>{{data.friends.length}}</span></h4>
     <ul>
-      <li class="friend-item" ng-repeat="friend in data.profile.friends">
+      <li class="friend-item" ng-repeat="friend in data.friends">
         <img src="https://d1fj9gpaeca6ia.cloudfront.net/static/global/images/no_profile_photo.png" width="100px" class="img-rounded">
         <p>{{friend}}</p>
     </ul>

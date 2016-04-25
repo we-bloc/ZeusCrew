@@ -15,7 +15,23 @@ angular.module('dashboard.profileFactory', [])
       });
       return deferred.promise;
     };
+    var getMyFriends = function () {
+      var deferred = $q.defer();
+      $http({
+        method: 'GET',
+        url: '/myFriends'
+      })
+      .then(function (res) {
+        deferred.resolve (res.data);
+      })
+      .catch(function (err) {
+        deferred.reject(err);
+      });
+      return deferred.promise;
+    };
+
     return {
-      getMyProfile: getMyProfile
+      getMyProfile: getMyProfile,
+      getMyFriends: getMyFriends
     };
   });
