@@ -1,6 +1,7 @@
 var Q = require('q');
 var Journey = require('./journeyModel.js');
 var jwt = require('jwt-simple');
+var app = require('./../server.js');
 
 var findJourney = Q.nbind(Journey.findOne, Journey);
 var createJourney = Q.nbind(Journey.create, Journey);
@@ -78,7 +79,9 @@ module.exports = {
     // Find the project and add the data to it
     Journey.findById(req.body.pid).then(function(trip) {
       trip.comments.push(data);
-      trip.save().then(function(newTrip) {console.log(trip)});
+      trip.save().then(function(newTrip) {
+        console.log('comment saved');
+      });
     });
     res.status(200).json(data);
   }

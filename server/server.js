@@ -40,8 +40,28 @@ app.use(userController.errorHandler);
 
 var port = process.env.PORT || 8080;
 
-app.listen(port, function() {
+var server = app.listen(port, function() {
   console.log('Listening to: ' + port);
 });
 
-module.exports = app;
+var io = require('socket.io')(server);
+
+io.on('connection', function(socket) {
+  console.log('Socket connected!');
+  socket.on('msgSent', function(data) {
+    console.log('Got message');
+    io.emit('msgReceived', data);
+  });
+
+  socket.on('sentNotif', function(data) {
+    io.emit('receivedNotif', data);
+  });
+
+  console.log(io.engine.clientsCount);
+  module.exports.socket = socket;
+});
+
+module.exports = {
+  io: io,
+  port: port
+};

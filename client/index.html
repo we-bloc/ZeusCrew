@@ -67,5 +67,13 @@
   <div ui-view></div>
    <!-- Angular Material Library -->
   <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+  <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+  <script>
+    // Create socket connection
+    var socket = io.connect('http://localhost:3000');
+    socket.on('msgReceived', function(data) {
+      console.log(data);
+    });
+  </script>
 </body>
 </html>

@@ -26,7 +26,10 @@ function dashboardCtrl ($timeout, $q, $http, dashboardFactory) {
 
   //These are the functions that send the friend request
   self.sendRequest = function() {
-    dashboardFactory.sendRequest(self.selectedUser).then(self.showSuccess);
+    dashboardFactory.sendRequest(self.selectedUser).then(function(data) {
+      self.showSuccess();
+      socket.emit('sentNotif', data);
+    });
   };
 
 
