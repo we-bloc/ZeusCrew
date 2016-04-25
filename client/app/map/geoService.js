@@ -75,9 +75,12 @@ angular.module('gservice', [])
         googleMapService.thisTrip.end = end;
         googleMapService.thisTrip.waypoints = waypoints;
         var stops = []; //format stops for Google request
-        waypoints.forEach(function (w) {
+        waypoints.forEach(function (object) {
+          if(!object.location) {
+            object.location = object.formatted_address;
+          }
           stops.push({
-            location: w.location,
+            location: object.location,
             stopover: true
           });
         });
@@ -121,40 +124,83 @@ angular.module('gservice', [])
         return waypoints;
       };
 
+      //Promisified function that returns objects that can be used to request info from the Maps API
+      var placeRequests = function(waypointArray, distance, type) {
+        return $q(function(resolve, reject) {
+          resolve(waypointArray.map(function(waypoint){
+            return {
+              location: new google.maps.LatLng(waypoint.lat, waypoint.lng),
+              radius: distance || '500',
+              query: type || 'restaurant'
+            }
+          }))
+        });
+      };
+
+      // Promisified function that queries google for all possible restaurants
+      var googleQuery = function(request) {
+        var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), request.location);
+        return $q(function(resolve, reject) {
+         placesService.textSearch(request, function(results, status) {
+          getBestRated(results, status, placesService,function(data){
+            resolve(data);
+          });
+          });
+        });   
+      };
+
+      // Callback function that returns the best rated restaurants
+      function getBestRated(results, status, service, cb) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          var bestRated = 0; 
+          for (var i = 0; i < results.length; i++) {
+            var place = results[i];
+            if(place.rating > bestRated) {
+              bestRated = place;
+            };
+          };
+          getSweetDeets(bestRated, service)
+            .then(function(data) {
+              cb(data);
+            });
+          // return bestRated;
+        }
+      };
+
+      function getSweetDeets (location, service) {
+        var id = location.place_id; 
+        return $q(function(resolve, reject) {
+          service.getDetails({
+            placeId: id,
+          }, function(place, status) {
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+              resolve(place);
+            };
+          });
+        }) 
+      };
+
       //get a single nearby attraction for each waypoint (promisified function)
       var getNearbyThings = function (waypointArray, distance, type) {
-        var deferred = $q.defer();
-        var placesToStop = [];
-        //build out an array of requests
-        var placeRequests = [];
-        waypointArray.forEach(function (w) {
-          placeRequests.push({
-            location: new google.maps.LatLng(w.lat, w.lng),
-            radius: distance || '500',
-            query: type || 'restaurant'
-          });
-        });
-        //query the google places service each waypoint
-        var doneSoFar = 0; //counter for async for loop
-        for (var i = 0; i < placeRequests.length; i++) {
-          var placesService = new google.maps.places.PlacesService(document.getElementById('invisible'), placeRequests[i].location);
-          placesService.textSearch(placeRequests[i], function (res, status) {
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-              var place = {
-                location: res[0].formatted_address,
-                name: res[0].name
-              };
-              placesToStop.push(place);
-              doneSoFar++;
-              if (doneSoFar === placeRequests.length) {
-                deferred.resolve(placesToStop);
-              }
-            } else { //if Google doesn't send an OK status
-              deferred.reject('we had a problem');
-            }
-          });
-        }
-        return deferred.promise;
+        return $q(function(resolve, reject) {
+          placeRequests(waypointArray)
+            .then(function(requestsArray) {
+                //requestsArray is good
+              var arr = [];
+              $q(function(resolve, reject) {
+                requestsArray.forEach(function(request) {
+                  googleQuery(request).then(function(data){
+                    arr.push(data);
+                    if(arr.length === requestsArray.length) {
+                      resolve(arr);
+                    }
+                  });
+                });
+              }).then(function(data) {
+                resolve(data);
+              })
+            });  
+        })
       };
 
       //Record order in 'position' property of each waypoint

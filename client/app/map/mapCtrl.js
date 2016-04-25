@@ -14,8 +14,6 @@ angular.module('roadtrippin.maps', ['gservice'])
     startAutoComplete.addListener('place_changed', function() {
       $scope.route.start = startAutoComplete.getPlace().formatted_address;
         var place = startAutoComplete.getPlace();
-        console.log('place', place);   
-        console.log($scope.route.start); 
     });
 
     var endAutoComplete = new google.maps.places.Autocomplete(
@@ -41,7 +39,6 @@ angular.module('roadtrippin.maps', ['gservice'])
     };
 
     var splitLocations = function (places) {
-      console.log(places);
       $scope.places = [];
       //copy the places array before we start splitting things so our original stays in-tact
       var placesCopy = [];
@@ -66,7 +63,6 @@ angular.module('roadtrippin.maps', ['gservice'])
 
     $scope.getAll = function () {
       mapFactory.getAllRoutes().then(function (results) {
-        console.log(results);
         $scope.savedRoutes = results;
       });
     };
@@ -77,19 +73,19 @@ angular.module('roadtrippin.maps', ['gservice'])
       for (var i = 0; i < $scope.savedRoutes.length; i++) {
         if ($scope.savedRoutes[i].hash === hash) {
           //split up waypoints array into names ans locations. Even index ==== name, odd index === location
-          $scope.savedRoutes[i].stopLocations = [];
+          $scope.savedRoutes[i].stopThings = [];
           $scope.savedRoutes[i].stopNames = [];
           for (var j = 0; j < $scope.savedRoutes[i].wayPoints.length; j++) {
             if (j % 2 === 0) {
               $scope.savedRoutes[i].stopNames.push($scope.savedRoutes[i].wayPoints[j]);
             } else {
-              $scope.savedRoutes[i].stopLocations.push($scope.savedRoutes[i].wayPoints[j]);
+              $scope.savedRoutes[i].stopThings.push($scope.savedRoutes[i].wayPoints[j]);
             }
           }
           //set $scope.places to saved stop data so stop data will display on page
           var places = [];
           for (var k = 0; k < $scope.savedRoutes[i].stopNames.length; k++) {
-            var location = $scope.savedRoutes[i].stopLocations[k];
+            var location = $scope.savedRoutes[i].stopThings[k];
             var place = {
               name: $scope.savedRoutes[i].stopNames[k],
               location: location,
