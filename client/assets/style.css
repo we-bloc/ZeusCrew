@@ -214,5 +214,8 @@ h3 {
 .profile-item h2, .profile-item h5, .profile-item hr {
   margin: 5px;
 }
-
+/******Trips******/
+.comments {
+  text-align: left;
+}
 
