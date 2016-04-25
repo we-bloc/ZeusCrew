@@ -1,1 +1,17 @@
-<h1> This is the Profile View</h1>
+<div class="profile">
+  <div class="profile-item">
+    <img src="https://d1fj9gpaeca6ia.cloudfront.net/static/global/images/no_profile_photo.png" width="150px" class='img-rounded'>
+    <h2>{{data.profile.firstname}} {{data.profile.lastname}}</h2>
+    <hr>
+    <h5>{{data.profile.username}}</h5>
+  </div>
+  <div class="friends-list">
+    <h4>Friends <span>{{data.friends.length}}</span></h4>
+    <ul>
+      <li class="friend-item" ng-repeat="friend in data.friends">
+        <img src="https://d1fj9gpaeca6ia.cloudfront.net/static/global/images/no_profile_photo.png" width="100px" class="img-rounded">
+        <p>{{friend}}</p>
+    </ul>
+    <div class="clearfix"></div>
+  </div>
+</div>

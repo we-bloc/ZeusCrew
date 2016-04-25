@@ -61,7 +61,7 @@ module.exports = {
         var pending = user.pending;
         var purged = pending.filter(function(item) {
           return typeof item === 'object';
-        })
+        });
         user.pending = purged;
         user.save(function(err) {
           if(err) res.send(err);
@@ -112,8 +112,8 @@ module.exports = {
             currentUser.pending.splice(index, 1);
           }
           currentUser.save(function(){
-            if(!accepted) res.send({message:"Request Handled!"})
-          })
+            if(!accepted) res.send({message:"Request Handled!"});
+          });
         }
         if (accepted) {
           findUserById(requesterID)
@@ -123,7 +123,7 @@ module.exports = {
                 friendToBe.friends.push(responderID);
                 currentUser.save(function() {
                   friendToBe.save(function(){
-                    res.send({message:"Request Handled!"})
+                    res.send({message:"Request Handled!"});
                   });          
                 });
             });
@@ -139,10 +139,33 @@ module.exports = {
       currentUser = user;
       findUsers({_id:{ $nin: currentUser.friends }})
         .then(function (users) {
+          console.log(users);
           res.send(users);
         });
     });
   },
+  getProfile: function (req, res) {
+    var token = req.headers['x-access-token'];
+    var user = jwt.decode(token, 'route66');
+    var userID = user._id;
+    findUserById(userID)
+      .then(function (user) {
+        res.status(200).send(user);
+      });
+  },
+  getFriends: function (req, res) {
+    var token = req.headers['x-access-token'];
+    var user = jwt.decode(token, 'route66');
+    var userID = user._id;
+    findUsers({_id: { $in: user.friends}})
+      .then(function (friends) {
+        friends = friends.map(function (friend) {
+          return friend.username;
+        })
+        res.send(friends);
+      });
+  },
+
   checkAuth: function(req, res, next) {
     var token = req.headers['x-access-token'];
     if (!token) {

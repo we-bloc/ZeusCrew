@@ -23,7 +23,9 @@ db.once('open', function() {
   
 // Grab only the logged in users trips
 app.get('/myTrips', journeyController.getTrips);
-
+//Grab user profile
+app.get('/myProfile', userController.getProfile);
+app.get('/myFriends', userController.getFriends);
 app.post('/saveJourney', journeyController.saveJourney);
 app.get('/saveJourney', journeyController.getAll);
 app.put('/messages', journeyController.addMsg);

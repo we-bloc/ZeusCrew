@@ -191,4 +191,27 @@ h3 {
   text-align: left;
   margin-bottom: 0px;
 }
+/*******profile View*******/
+.profile-item, .friends-list {
+  border: 2px solid #00a5ae;
+  padding: 10px 10px;
+  max-width: 450px;
+  margin: 10px 10px;
+  color: #00353e;
+}
+
+.friends-list h4 {
+  border-bottom: 2px solid #00a5ae;
+  width: 100px;
+}
+.friends-list ul {
+  margin: 0;
+  padding: 0;
+}
+ .friend-item {
+  display: inline;
+  float: left;
+  margin-right: 15px;
+}
+
 
