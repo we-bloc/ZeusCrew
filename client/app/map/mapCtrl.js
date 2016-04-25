@@ -73,6 +73,7 @@ angular.module('roadtrippin.maps', ['gservice'])
 
     $scope.viewSavedRoute = function (hash) {
       $location.hash('top');
+      console.log($scope.savedRoutes);
       $anchorScroll();
       for (var i = 0; i < $scope.savedRoutes.length; i++) {
         if ($scope.savedRoutes[i].hash === hash) {
