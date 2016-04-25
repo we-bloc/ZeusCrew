@@ -72,10 +72,15 @@ angular.module('roadtrippin', [
       $scope.notifications = pending.data;
     });
   };
+
+  socket.on('receivedNotif', $scope.getNotifications);
+
   $scope.getNotifications();
 
   $scope.reqResponse = function(bool) {
     dashboardFactory.reqResponse(bool).then(function(stuff) {
+      socket.emit('reqResponse', stuff);
+      $scope.getNotifications();
       $mdDialog.hide();
     });
   };

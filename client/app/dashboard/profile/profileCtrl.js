@@ -7,6 +7,12 @@ angular.module('dashboard.profile', ['dashboard.profileFactory'])
       });
     };
 
+    socket.on('refreshFriends', function() {
+      console.log('Refreshing friends!');
+      $scope.getProfile();
+      console.log($scope.data);
+    });
+
     $scope.getProfile();
     
   }]);

@@ -15,8 +15,14 @@ angular.module('dashboard.trips', ['dashboard.tripsFactory'])
       };
       tripsFactory.addMessage(details).then(function(data) {
         console.log(data);
+        socket.emit('msgSent', data);
       });
     };
+
+    socket.on('msgReceived', function(data) {
+      console.log(data);
+      getTrips();
+    });
 
     var getTrips = function() {
       tripsFactory.getMyTrips().then(function(results) {
