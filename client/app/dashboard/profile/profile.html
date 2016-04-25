@@ -1,16 +1,16 @@
 <div class="profile">
   <div class="profile-item">
     <img src="https://d1fj9gpaeca6ia.cloudfront.net/static/global/images/no_profile_photo.png" width="150px" class='img-rounded'>
-    <h2>{{data.profile.firstname}} {{data.profile.lastname}}</h2>
+    <h2>{{profile.user.firstname}} {{profile.user.lastname}}</h2>
     <hr>
-    <h5>{{data.profile.username}}</h5>
+    <h5>{{profile.user.username}}</h5>
   </div>
   <div class="friends-list">
-    <h4>Friends <span>{{data.friends.length}}</span></h4>
+    <h4>Friends <span>{{profile.friends.length}}</span></h4>
     <ul>
-      <li class="friend-item" ng-repeat="friend in data.friends">
+      <li class="friend-item" ng-repeat="friend in profile.friends | limitTo:6">
         <img src="https://d1fj9gpaeca6ia.cloudfront.net/static/global/images/no_profile_photo.png" width="100px" class="img-rounded">
-        <p>{{friend}}</p>
+        <p>{{friend.username}}</p>
     </ul>
     <div class="clearfix"></div>
   </div>

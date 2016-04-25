@@ -139,7 +139,7 @@ module.exports = {
       currentUser = user;
       findUsers({_id:{ $nin: currentUser.friends }})
         .then(function (users) {
-          console.log(users);
+          //console.log(users);
           res.send(users);
         });
     });
@@ -148,23 +148,31 @@ module.exports = {
     var token = req.headers['x-access-token'];
     var user = jwt.decode(token, 'route66');
     var userID = user._id;
-    findUserById(userID)
+    var profile = {};
+    profile.friends = [];
+    findUser({_id: userID})
       .then(function (user) {
-        res.status(200).send(user);
+        profile.user = user;
+        findUsers({_id: {$in: user.friends }})
+          .then(function (users) {
+            profile.friends = users;
+            console.log(profile);
+            res.send(profile);
+          });
       });
   },
-  getFriends: function (req, res) {
-    var token = req.headers['x-access-token'];
-    var user = jwt.decode(token, 'route66');
-    var userID = user._id;
-    findUsers({_id: { $in: user.friends}})
-      .then(function (friends) {
-        friends = friends.map(function (friend) {
-          return friend.username;
-        })
-        res.send(friends);
-      });
-  },
+  // getFriends: function (req, res) {
+  //   var token = req.headers['x-access-token'];
+  //   var user = jwt.decode(token, 'route66');
+  //   var userID = user._id;
+  //   findUsers({_id: { $in: user.friends}})
+  //     .then(function (friends) {
+  //       friends = friends.map(function (friend) {
+  //         return friend.username;
+  //       });
+  //       res.send(friends);
+  //     });
+  // },
 
   checkAuth: function(req, res, next) {
     var token = req.headers['x-access-token'];
