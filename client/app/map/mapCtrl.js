@@ -106,7 +106,9 @@ angular.module('roadtrippin.maps', ['gservice'])
     $scope.showForm = function() {
       $scope.showNameForm = !$scope.showNameForm;
     };
-
+    
     $scope.getAll();
+    gservice.refresh();
 
   });
+  

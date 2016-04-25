@@ -58,10 +58,19 @@ module.exports = {
     // Grab user token, get the users ID
     var token = req.headers['x-access-token'];
     var user = jwt.decode(token, 'route66');
-
+    console.log('user below:');
+    console.log(user);
+    // Get user and their friends
+    // User.findById(user._id).then(function(data) {
+    //   console.log(data.friends);
+    // });
+    user.friends.push(user._id);
+    var tripsToFind = user.friends;
+    console.log(tripsToFind);
     // Find the users journeys
-    Journey.find({ userID: user._id })
+    Journey.find({ userID: {$in: tripsToFind} })
       .then(function (data) {
+        console.log(data);
         res.status(200).send(data);
       })
       .catch(function (error) {

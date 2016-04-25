@@ -33,7 +33,7 @@ angular.module('gservice', [])
 
       // Refresh the page upon window load.
       google.maps.event.addDomListener(window, 'load',
-        googleMapService.refresh());
+        googleMapService.refresh);
 
 
       // Navigation functions - Google directions service
