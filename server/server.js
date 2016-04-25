@@ -57,6 +57,10 @@ io.on('connection', function(socket) {
     io.emit('receivedNotif', data);
   });
 
+  socket.on('reqResponse', function(data) {
+    io.emit('refreshFriends', data);
+  });
+
   console.log(io.engine.clientsCount);
   module.exports.socket = socket;
 });

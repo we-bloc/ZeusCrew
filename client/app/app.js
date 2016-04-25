@@ -79,6 +79,7 @@ angular.module('roadtrippin', [
 
   $scope.reqResponse = function(bool) {
     dashboardFactory.reqResponse(bool).then(function(stuff) {
+      socket.emit('reqResponse', stuff);
       $mdDialog.hide();
     });
   };
