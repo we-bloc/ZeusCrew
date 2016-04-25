@@ -70,7 +70,7 @@
   <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
   <script>
     // Create socket connection
-    var socket = io.connect(window.location.hostname);
+    var socket = io.connect();
     socket.on('msgReceived', function(data) {
       console.log(data);
     });
