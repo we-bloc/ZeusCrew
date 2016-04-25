@@ -213,5 +213,8 @@ h3 {
   float: left;
   margin-right: 15px;
 }
+.profile-item h2, .profile-item h5, .profile-item hr {
+  margin: 5px;
+}
 
 
