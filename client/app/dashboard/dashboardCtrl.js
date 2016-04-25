@@ -22,6 +22,7 @@ function dashboardCtrl ($timeout, $q, $http, dashboardFactory) {
   // This toggles the success alert
   self.showSuccess = function () {
     self.showSuccessAlert = !self.showSuccessAlert;
+    self.searchText = '';
   };
 
   //These are the functions that send the friend request
