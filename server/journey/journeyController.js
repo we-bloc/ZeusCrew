@@ -17,7 +17,7 @@ module.exports = {
     var user = jwt.decode(token, 'route66'); 
 
     for (var i = 0; i < req.body.waypoints.length; i++) {
-      waypoints[req.body.waypoints[i].position] = [req.body.waypoints[i].name, req.body.waypoints[i].location];
+      waypoints[req.body.waypoints[i].position] = [req.body.waypoints[i].name, req.body.waypoints[i].formatted_address];
     }
 
     var waypointsCopy = [].concat.apply([], waypoints);
@@ -26,7 +26,6 @@ module.exports = {
     findJourney({wayPoints: waypoints})
       .then(function (waypoint) {
         if (!waypoint) {
-          console.log('here');
           return createJourney({
             startPoint: start,
             endPoint: end,
