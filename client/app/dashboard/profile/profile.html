@@ -8,7 +8,7 @@
   <div class="friends-list">
     <h4>Friends <span>{{profile.friends.length}}</span></h4>
     <ul>
-      <li class="friend-item" ng-repeat="friend in profile.friends | limitTo:6">
+      <li class="friend-item" ng-repeat="friend in profile.friends | limitTo:3">
         <img src="https://d1fj9gpaeca6ia.cloudfront.net/static/global/images/no_profile_photo.png" width="100px" class="img-rounded">
         <p>{{friend.username}}</p>
     </ul>
