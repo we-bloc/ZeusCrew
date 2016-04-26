@@ -3,9 +3,18 @@ angular.module('dashboard.trips', ['dashboard.tripsFactory'])
     $scope.myTrips = [];
     $scope.msg = {};
     // Get all of the users trips
+    $scope.showing = false;
+    $scope.text = "Hide Comments";
     
     $scope.toggle = function(trip) {
       trip.showComments = !trip.showComments;
+      if(!$scope.showing) {
+        $scope.text = "Show Comments";
+        $scope.showing = true;
+      } else {
+        $scope.text = "Hide Comments";
+        $scope.showing = false;
+      }
     };
 
     $scope.sendComment = function(project) {
