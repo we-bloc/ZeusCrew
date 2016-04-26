@@ -5,8 +5,11 @@
       <h4 class="nickName">{{ route.nickName }}</h4>
       <p class="route-start">From: {{ route.startPoint }}</p>
       <p class="route-end">To: {{ route.endPoint }}</p>
-      <a class="pull-left" href="Javascript:void(0)" ng-if="!route.showComments" ng-click="toggle(route)">Show comments</a>
-      <a class="pull-left" href="Javascript:void(0)" ng-if="route.showComments" ng-click="toggle(route)">Hide comments</a>
+      <md-switch ng-model="data.cb6" aria-label="Switch 6" ng-change="toggle(route)">
+        {{text}}
+      </md-switch>
+      <!-- <a class="pull-left" href="Javascript:void(0)" ng-if="!route.showComments" ng-click="toggle(route)">Show comments</a> -->
+      <!-- <a class="pull-left" href="Javascript:void(0)" ng-if="route.showComments" ng-click="toggle(route)">Hide comments</a> -->
     </div>
     <div class="col-xs-4">
       <!-- <div class="stop-count">Number of stops: <br /> {{ route.wayPoints.length/2 }}</div> -->
@@ -33,18 +36,12 @@
           </section>
       <!-- </div> -->
       <form ng-submit="sendComment(route)" class="pull-left">
-        <!-- <input ng-model="msg.text" type="text" placeholder="Add a comment"> -->
-        <!-- <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-        <label>Name</label>
-        </md-input-container>
-        </div> -->
         <div layout-gt-sm="row">
-                  <md-input-container class="md-block" flex-gt-sm>
-                    <label>Text</label>
-                    <input ng-model="msg.text">
-                  </md-input-container>
-                </div>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Text</label>
+            <input ng-model="msg.text">
+          </md-input-container>
+        </div>
       </form>
     </div>
   </div>
