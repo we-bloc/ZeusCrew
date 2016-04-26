@@ -47,7 +47,7 @@
   <div class="row info save-routes" ng-repeat="route in savedRoutes">
     <div class="col-xs-4">
     <!-- TODO: STYLE THIS -->
-      <p class="route-start">Nickname: {{ route.nickName }}  Created: {{ formatDate(route.createdAt) }}</p>
+      <h4 class="nickName">{{ route.nickName }}<span class="createdAt">Created {{ formatDate(route.createdAt) }}</span></h4>
       <p class="route-start">From: {{ route.startPoint }}</p>
       <p class="route-end">To: {{ route.endPoint }}</p>
     </div>

@@ -58,8 +58,15 @@ angular.module('roadtrippin.maps', ['gservice'])
 
     $scope.saveRoute = function () {
       gservice.thisTrip.nickname = $scope.trip.name;
-      mapFactory.saveJourneyWithWaypoints(gservice.thisTrip).then($scope.getAll());
+      mapFactory.saveJourneyWithWaypoints(gservice.thisTrip).then(function() {
+        $scope.getAll();
+        socket.emit('projectAdded', {some: 'data'});
+      }());
     };
+
+    socket.on('projectSaved', function(data) {
+      $scope.getAll();
+    });
 
     $scope.getAll = function () {
       mapFactory.getAllRoutes().then(function (results) {

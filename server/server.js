@@ -46,16 +46,16 @@ var server = app.listen(port, function() {
 
 var io = require('socket.io')(server);
 
-if (process.env.MONGODB_URI) {
-  io.set("transports", ["xhr-polling"]); 
-  io.set("polling duration", 10); 
-}
-
 io.on('connection', function(socket) {
   console.log('Socket connected!');
   socket.on('msgSent', function(data) {
     console.log('Got message');
     io.emit('msgReceived', data);
+  });
+
+  socket.on('projectAdded', function(data) {
+    console.log('project added');
+    io.emit('projectSaved', data);
   });
 
   socket.on('sentNotif', function(data) {

@@ -214,12 +214,22 @@ h3 {
 .profile-item h2, .profile-item h5, .profile-item hr {
   margin: 5px;
 }
+
 /******Trips******/
 .comments {
   text-align: left;
 }
 
+
 .this {
   margin-bottom: -5px
+}
+
+
+.createdAt {
+  font-family: "Roboto", Arial, Helvetica;
+  font-size: 15px;
+  padding-left: 10px;
+  font-style: italic;
 }
 
