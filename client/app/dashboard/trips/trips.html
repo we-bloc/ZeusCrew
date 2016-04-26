@@ -15,12 +15,11 @@
       <!-- <div class="stop-count">Number of stops: <br /> {{ route.wayPoints.length/2 }}</div> -->
       <div class="stop-count pull-right">{{route.wayPoints.length/2}} stop<span ng-if="route.wayPoints.length > 2">s</span></div>
     </div>
-    <div class="row"></div>
-    <div class="comments col-xs-8"  ng-if="route.showComments">
+    <div class="row this"></div>
+    <div class="comments col-xs-12"  ng-if="route.showComments">
       <!-- <div ng-repeat="comment in route.comments"> -->
         <!-- <p>{{comment.user}}:  {{comment.text}}</p> -->
          <section>
-            <md-subheader class="md-success">Comments</md-subheader>
               <md-list layout="column" layout-padding>
                 <md-list-item class="md-6-line" ng-repeat="comment in route.comments">
                   <img ng-src="https://d1fj9gpaeca6ia.cloudfront.net/static/global/images/no_profile_photo.png" class="md-avatar" >
