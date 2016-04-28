@@ -53,6 +53,11 @@ io.on('connection', function(socket) {
     io.emit('msgReceived', data);
   });
 
+  socket.on('projectAdded', function(data) {
+    console.log('project added');
+    io.emit('projectSaved', data);
+  });
+
   socket.on('sentNotif', function(data) {
     io.emit('receivedNotif', data);
   });

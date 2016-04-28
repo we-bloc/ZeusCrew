@@ -159,6 +159,9 @@ angular.module('gservice', [])
               bestRated = place;
             };
           };
+          if (bestRated === 0) {
+            bestRated = results[0];
+          }
           getSweetDeets(bestRated, service)
             .then(function(data) {
               cb(data);
